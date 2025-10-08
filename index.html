@@ -199,27 +199,35 @@
         <a href="#about" class="menu-item">About</a>
         <a href="#contact" class="menu-item">Contact</a>
       </div>
-      <button class="md:hidden">
+      <button class="md:hidden mobile-menu-btn" onclick="toggleMobileMenu()">
         <i data-feather="menu"></i>
       </button>
+      <div class="mobile-menu hidden md:hidden absolute top-full left-0 w-full bg-black bg-opacity-95 backdrop-blur-sm">
+        <div class="flex flex-col space-y-4 p-6">
+          <a href="#" class="menu-item text-center py-2">Home</a>
+          <a href="#projects" class="menu-item text-center py-2">Projects</a>
+          <a href="#about" class="menu-item text-center py-2">About</a>
+          <a href="#contact" class="menu-item text-center py-2">Contact</a>
+        </div>
+      </div>
     </nav>
 
     <main class="container mx-auto px-4 pt-32 pb-20">
       <section class="min-h-screen flex flex-col justify-center">
-        <h1 class="text-5xl md:text-8xl font-bold mb-6 float-animation">
+        <h1 class="text-4xl sm:text-5xl md:text-8xl font-bold mb-6 float-animation">
           Hello, I'm <span class="text-blue-400 glow-text">AHMAD</span>
         </h1>
         <div class="text-xl md:text-2xl mb-12">
           <span class="typing-text">AI Developer & ML Engineer</span>
         </div>
-        <div class="flex space-x-4">
-          <a href="#projects" class="px-8 py-3 bg-blue-400 text-white rounded-full font-medium hover:bg-blue-500 transition btn-glow">
+        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+          <a href="#projects" class="px-8 py-3 border border-blue-400 rounded-full font-medium hover:bg-blue-400 hover:text-black transition btn-glow text-center">
             View Projects
           </a>
-              <a href="#contact" class="px-8 py-3 border border-cyan-400 rounded-full font-medium hover:bg-cyan-400 hover:text-black transition btn-glow">
+          <a href="#contact" class="px-8 py-3 border border-cyan-400 rounded-full font-medium hover:bg-cyan-400 hover:text-black transition btn-glow text-center">
             Contact Me
           </a>
-          <a href="assets/docs/resume.pdf" target="_blank" class="px-8 py-3 border border-purple-400 rounded-full font-medium hover:bg-purple-400 hover:text-white transition btn-glow">
+          <a href="assets/docs/resume.pdf" target="_blank" class="px-8 py-3 border border-purple-400 rounded-full font-medium hover:bg-purple-400 hover:text-white transition btn-glow text-center">
             View Resume
           </a>
 </div>
@@ -492,6 +500,14 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
   </div>
 
   <script>
+    // =============================================
+    // MOBILE MENU TOGGLE
+    // =============================================
+    function toggleMobileMenu() {
+      const mobileMenu = document.querySelector('.mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    }
+
     // =============================================
     // NEURAL NETWORK CANVAS - Connected Nodes
     // =============================================
