@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Detection and Prevention System - Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #050a15 50%, #0d1b2a 100%);
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-cyan-900 to-blue-900 py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl font-bold mb-4 glow-text">Crime Detection and Prevention System</h1>
+            <p class="text-xl text-gray-300 mb-8">Real-time AI that detects threats and helps prevent crime using vision, NLP, and risk scoring</p>
+            <a href="../index.html" class="inline-flex items-center px-6 py-3 bg-cyan-400 hover:bg-cyan-500 text-black rounded-full font-medium btn-glow transition-all duration-300">
+                <i data-feather="arrow-left" class="mr-2"></i>
+                Back to Portfolio
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-16">
+        <!-- Project Overview -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 glow-text">Project Overview</h2>
+            <div class="bg-gray-800 rounded-xl p-8">
+                <p class="text-lg text-gray-300 mb-6">
+                    The Crime Detection and Prevention System (CDPS) is an advanced AI-powered security solution designed to identify potential criminal activities in real-time and provide early warning systems to prevent incidents before they occur. This comprehensive system combines computer vision, natural language processing, and behavioral analytics to create a multi-layered security approach.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-cyan-400">Key Features</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Real-time threat detection and analysis</li>
+                            <li>• Behavioral pattern recognition</li>
+                            <li>• Multi-modal data processing (video, audio, text)</li>
+                            <li>• Predictive risk assessment</li>
+                            <li>• Automated alert system</li>
+                            <li>• Integration with existing security infrastructure</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-cyan-400">Technologies</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Python & TensorFlow/PyTorch</li>
+                            <li>• OpenCV for computer vision</li>
+                            <li>• BERT for natural language processing</li>
+                            <li>• PostgreSQL for data storage</li>
+                            <li>• Redis for real-time processing</li>
+                            <li>• Docker & Kubernetes for deployment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 glow-text">System Architecture</h2>
+            <div class="bg-gray-800 rounded-xl p-8">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="bg-cyan-400 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="eye" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Vision Processing</h3>
+                        <p class="text-gray-400">Real-time video analysis and object detection for threat identification</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-cyan-400 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="cpu" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">AI Engine</h3>
+                        <p class="text-gray-400">ML models for behavioral analysis and risk assessment</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-cyan-400 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="shield" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Alert System</h3>
+                        <p class="text-gray-400">Automated notifications and prevention protocols</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CDPS Flowchart -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 glow-text">System Flowchart</h2>
+            <div class="bg-gray-800 rounded-xl p-8">
+                <p class="text-lg text-gray-300 mb-6">High-level processing flow from data ingestion to alerting and operator action.</p>
+                <div class="bg-black/30 border border-white/10 rounded-lg overflow-hidden">
+                    <img src="../../../assets/images/projects/CDPS flowchart.webp" alt="CDPS Flowchart" class="mx-auto h-auto w-full max-w-2xl">
+                </div>
+                <p class="text-sm text-gray-400 mt-4 text-center">Note: Diagram is illustrative and may omit environment-specific details.</p>
+            </div>
+        </section>
+
+        <!-- Core Features -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 glow-text">Core Features</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="activity" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Real-time Detection</h3>
+                    </div>
+                    <p class="text-gray-400">Advanced computer vision algorithms detect suspicious activities, weapons, and behavioral anomalies in real-time video streams.</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="alert-triangle" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Risk Assessment</h3>
+                    </div>
+                    <p class="text-gray-400">Multi-factor risk scoring system that combines visual cues, behavioral patterns, and contextual data to assess threat levels.</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="message-circle" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">NLP Analysis</h3>
+                    </div>
+                    <p class="text-gray-400">Natural language processing for emergency call analysis, sentiment detection, and automated incident categorization.</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="bell" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Alert System</h3>
+                    </div>
+                    <p class="text-gray-400">Intelligent alerting system with priority-based notifications and automated response protocols for security personnel.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Implementation -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 glow-text">Technical Implementation</h2>
+            <div class="bg-gray-800 rounded-xl p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-cyan-400">Model Architecture</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-green-400 mr-3"></i>
+                                YOLOv8/Detectron2 for object detection
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-green-400 mr-3"></i>
+                                SlowFast/TSN for action recognition
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-green-400 mr-3"></i>
+                                BERT transformers for NLP tasks
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-green-400 mr-3"></i>
+                                Gradient-boosted trees for risk scoring
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-cyan-400">Performance Metrics</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-300">Violence Detection F1</span>
+                                    <span class="text-cyan-400">92%</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-300">Alert Latency</span>
+                                    <span class="text-cyan-400">< 1.2s</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-300">False Positive Reduction</span>
+                                    <span class="text-cyan-400">37%</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 37%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 glow-text">Use Cases & Applications</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-cyan-800 to-blue-800 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-3">Smart Cities</h3>
+                    <p class="text-gray-300">Municipal surveillance systems for public safety monitoring and incident prevention in urban environments.</p>
+                </div>
+                <div class="bg-gradient-to-br from-cyan-800 to-blue-800 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-3">Corporate Security</h3>
+                    <p class="text-gray-300">Enterprise security solutions for offices, campuses, and facilities with automated threat detection and response.</p>
+                </div>
+                <div class="bg-gradient-to-br from-cyan-800 to-blue-800 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-3">Law Enforcement</h3>
+                    <p class="text-gray-300">Support tools for police departments with real-time crime analysis and predictive policing capabilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results & Impact -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 glow-text">Results & Impact</h2>
+            <div class="bg-gray-800 rounded-xl p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-cyan-400">Quantitative Results</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>92% accuracy in violence detection</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>37% reduction in false positives</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>Sub-1.2 second alert latency</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>99.9% system uptime</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-cyan-400">Business Impact</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i data-feather="users" class="w-5 h-5 text-blue-400 mr-3"></i>
+                                <span>Improved public safety response times</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="dollar-sign" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>Reduced security operational costs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="clock" class="w-5 h-5 text-yellow-400 mr-3"></i>
+                                <span>Faster incident detection and response</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="bar-chart" class="w-5 h-5 text-cyan-400 mr-3"></i>
+                                <span>Data-driven crime prevention strategies</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Enhancements -->
+        <section class="mb-16">
+            <h2 class="text-3xl font-bold mb-6 glow-text">Future Enhancements</h2>
+            <div class="bg-gray-800 rounded-xl p-8">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-cyan-400">Planned Features</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Multi-camera re-identification and tracking</li>
+                            <li>• Graph neural networks for incident correlation</li>
+                            <li>• Advanced predictive analytics for crime hotspots</li>
+                            <li>• Integration with IoT sensor networks</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-cyan-400">Technical Improvements</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Edge computing deployment for faster processing</li>
+                            <li>• Privacy-preserving federated learning</li>
+                            <li>• Continual learning with model adaptation</li>
+                            <li>• Enhanced explainable AI for decision transparency</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">&copy; 2025 Ahmad Nadeem Butt. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Website Status Check</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .checklist { background: #fff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Portfolio Website Status Check</h1>
+    
+    <div class="checklist">
+        <h2>✅ Current Status</h2>
+        <div id="status-container">
+            <div class="info">
+                <strong>Loading status...</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="checklist">
+        <h2>📋 Pre-Deployment Checklist</h2>
+        <ul>
+            <li>✅ Profile picture uploaded (profile.jpg)</li>
+            <li>🔄 Project images needed</li>
+            <li>🔄 Resume PDF needed</li>
+            <li>🔄 Project documentation needed</li>
+            <li>🔄 Contact form configuration needed</li>
+        </ul>
+    </div>
+
+    <div class="checklist">
+        <h2>🛠️ Quick Actions</h2>
+        <ul>
+            <li><a href="generate-placeholders.html" target="_blank">📸 Generate Project Placeholder Images</a></li>
+            <li><a href="index.html" target="_blank">🏠 View Main Website</a></li>
+            <li><a href="LOCAL-HOSTING.md" target="_blank">📖 Local Hosting Guide</a></li>
+            <li><a href="DEPLOYMENT.md" target="_blank">🚀 Deployment Guide</a></li>
+        </ul>
+    </div>
+
+    <div class="checklist">
+        <h2>📁 File Structure Check</h2>
+        <div id="files-status">
+            <div class="info">Checking files...</div>
+        </div>
+    </div>
+
+    <script>
+        function checkFileExists(url, name) {
+            return fetch(url, { method: 'HEAD' })
+                .then(response => ({ name, exists: response.ok }))
+                .catch(() => ({ name, exists: false }));
+        }
+
+        function updateStatus() {
+            const files = [
+                'assets/images/profile.jpg',
+                'assets/images/projects/neural-network-visualizer.jpg',
+                'assets/images/projects/predictive-analytics.jpg',
+                'assets/images/projects/computer-vision-api.jpg',
+                'assets/images/projects/nlp-processor.jpg',
+                'assets/docs/resume.pdf'
+            ];
+
+            Promise.all(files.map(file => checkFileExists(file, file)))
+                .then(results => {
+                    const container = document.getElementById('files-status');
+                    container.innerHTML = '';
+                    
+                    results.forEach(result => {
+                        const div = document.createElement('div');
+                        div.className = result.exists ? 'status success' : 'status error';
+                        div.innerHTML = `${result.exists ? '✅' : '❌'} ${result.name}`;
+                        container.appendChild(div);
+                    });
+                });
+        }
+
+        // Check if we're running on localhost
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const statusContainer = document.getElementById('status-container');
+        
+        if (isLocalhost) {
+            statusContainer.innerHTML = '<div class="status success"><strong>✅ Local Server Running</strong><br>Your website is accessible at this URL</div>';
+        } else {
+            statusContainer.innerHTML = '<div class="status warning"><strong>⚠️ Not Running Locally</strong><br>Make sure to start the local server with: <code>python -m http.server 8000</code></div>';
+        }
+
+        // Check files
+        updateStatus();
+        
+        // Refresh status every 5 seconds
+        setInterval(updateStatus, 5000);
+    </script>
+</body>
+</html>
+
+

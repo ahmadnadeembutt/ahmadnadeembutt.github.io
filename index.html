@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Portfolio | AI & ML Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: "Inter", sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #0a0e27 0%, #050a15 50%, #0d1b2a 100%);
+      color: white;
+      position: relative;
+    }
+    
+    /* Layered Canvas Backgrounds */
+    #neural-canvas, #particle-canvas, #grid-canvas, #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    #neural-canvas {
+      z-index: 1;
+      opacity: 0.6;
+    }
+    
+    #particle-canvas {
+      z-index: 2;
+      opacity: 0.4;
+    }
+    
+    #grid-canvas {
+      z-index: 0;
+      opacity: 0.3;
+    }
+    
+    #matrix-canvas {
+      z-index: 3;
+      opacity: 0.15;
+    }
+    
+    .content-wrapper {
+      position: relative;
+      z-index: 10;
+    }
+    
+    .custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(0, 255, 255, 0.8);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: all 0.15s ease-out;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+    
+    .custom-cursor-outer {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(138, 43, 226, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.2s ease-out;
+    }
+    
+    .menu-item {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    
+    .menu-item::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: linear-gradient(90deg, #00ffff, #8a2be2);
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    
+    .menu-item:hover::after {
+      width: 100%;
+    }
+    
+    .menu-item:hover {
+      color: #00ffff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+    }
+    
+    .typing-text::after {
+      content: "|";
+      animation: blink 1s infinite;
+      color: #00ffff;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    
+    .glow-text {
+      text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    }
+    
+    .project-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(138, 43, 226, 0.3);
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+      border-color: rgba(0, 255, 255, 0.6);
+    }
+    
+    .project-card:hover .project-overlay {
+      opacity: 1;
+    }
+    
+    .btn-glow {
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+    
+    .btn-glow:hover {
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+      transform: translateY(-2px);
+    }
+    
+    input, textarea {
+      transition: all 0.3s ease;
+    }
+    
+    input:focus, textarea:focus {
+      border-color: #00ffff !important;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3) !important;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes spin-slow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Multi-layered Canvas Backgrounds -->
+  <canvas id="grid-canvas"></canvas>
+  <canvas id="neural-canvas"></canvas>
+  <canvas id="particle-canvas"></canvas>
+  <canvas id="matrix-canvas"></canvas>
+  
+  <!-- Custom Cursor -->
+  <div class="custom-cursor"></div>
+  <div class="custom-cursor-outer"></div>
+
+  <div class="content-wrapper">
+    <nav class="fixed w-full px-8 py-6 z-50 flex justify-between items-center backdrop-blur-sm bg-black bg-opacity-20">
+      <div class="text-2xl font-bold tracking-tighter glow-text">
+        AHMAD<span class="text-blue-400">.</span>
+      </div>
+      <div class="hidden md:flex space-x-8">
+        <a href="#" class="menu-item">Home</a>
+        <a href="#projects" class="menu-item">Projects</a>
+        <a href="#about" class="menu-item">About</a>
+        <a href="#contact" class="menu-item">Contact</a>
+      </div>
+      <button class="md:hidden">
+        <i data-feather="menu"></i>
+      </button>
+    </nav>
+
+    <main class="container mx-auto px-4 pt-32 pb-20">
+      <section class="min-h-screen flex flex-col justify-center">
+        <h1 class="text-5xl md:text-8xl font-bold mb-6 float-animation">
+          Hello, I'm <span class="text-blue-400 glow-text">AHMAD</span>
+        </h1>
+        <div class="text-xl md:text-2xl mb-12">
+          <span class="typing-text">AI Developer & ML Engineer</span>
+        </div>
+        <div class="flex space-x-4">
+          <a href="#projects" class="px-8 py-3 bg-blue-400 text-white rounded-full font-medium hover:bg-blue-500 transition btn-glow">
+            View Projects
+          </a>
+              <a href="#contact" class="px-8 py-3 border border-cyan-400 rounded-full font-medium hover:bg-cyan-400 hover:text-black transition btn-glow">
+            Contact Me
+          </a>
+          <a href="assets/docs/resume.pdf" target="_blank" class="px-8 py-3 border border-purple-400 rounded-full font-medium hover:bg-purple-400 hover:text-white transition btn-glow">
+            View Resume
+          </a>
+</div>
+      </section>
+
+      <section id="projects" class="py-20">
+        <h2 class="text-3xl md:text-5xl font-bold mb-16">
+          Selected <span class="text-purple-400 glow-text">Projects</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
+            <img src="assets/images/projects/neural.png" alt="Neural Network Visualizer" class="w-full h-full object-cover">
+            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
+              <h3 class="text-2xl font-bold mb-2 glow-text">Neural Network Visualizer</h3>
+              <p class="text-center mb-4 text-gray-300">AI-based WebGL visualization of deep learning models.</p>
+              <a href="assets/docs/projects/neural-network-visualizer.html" target="_blank" class="px-6 py-2 bg-blue-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
+            </div>
+          </div>
+          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
+            <img src="assets/images/projects/cdps2.png" alt="Crime Detection and Prevention System (CDPS)" class="w-full h-full object-cover">
+            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
+              <h3 class="text-2xl font-bold mb-2 glow-text">Crime Detection and Prevention System (CDPS)</h3>
+              <p class="text-center mb-4 text-gray-300">Real-time AI that detects threats and helps prevent crime using vision, NLP, and risk scoring</p>
+              <a href="assets/docs/projects/cdps.html" target="_blank" class="px-6 py-2 bg-purple-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
+            </div>
+          </div>
+          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
+            <img src="assets/images/projects/garpus.png" alt="Garpus AI - Business Forecast System" class="w-full h-full object-cover">
+            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
+              <h3 class="text-2xl font-bold mb-2 glow-text">Garpus AI</h3>
+              <p class="text-center mb-4 text-gray-300">AI-based forecasts and marketing insights for small businesses.</p>
+              <a href="assets/docs/projects/garpus-ai.html" target="_blank" class="px-6 py-2 bg-green-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
+            </div>
+          </div>
+          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
+            <img src="assets/images/projects/nlp.png" alt="Natural Language Processor" class="w-full h-full object-cover">
+            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
+              <h3 class="text-2xl font-bold mb-2 glow-text">Natural Language Processor</h3>
+              <p class="text-center mb-4 text-gray-300">Advanced NLP pipeline for text analysis and generation.</p>
+              <a href="assets/docs/projects/nlp-processor.html" target="_blank" class="px-6 py-2 bg-purple-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
+            </div>
+          </div>
+        </div>
+</section>
+
+      <section id="about" class="py-20">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="md:w-full flex flex-col md:flex-row gap-8">
+                <div class="relative w-64 h-64 mx-auto md:mx-0">
+              <div class="absolute inset-0 rounded-full border-4 border-cyan-400/50 bg-gradient-to-br from-blue-500/20 to-purple-500/20 overflow-hidden">
+                <img src="assets/images/profile.jpg" alt="Profile Photo" class="w-full h-full object-cover">
+              </div>
+              <div class="absolute -inset-2 rounded-full border-2 border-purple-400/30 animate-spin-slow" style="animation-duration: 10s;"></div>
+            </div>
+<div class="space-y-12">
+              <div class="bg-gray-900 bg-opacity-50 backdrop-blur-sm border border-purple-500/30 rounded-xl p-8 flex-1">
+              <h2 class="text-3xl md:text-5xl font-bold mb-8">About <span class="text-cyan-400 glow-text">Me</span></h2>
+<p class="text-lg mb-6 text-gray-200">
+                An AI Engineer who turns data into intelligence and ideas into automation.
+I specialize in machine learning, computer vision, and NLP, crafting smart systems that see, think, and respond.
+              </p>
+              <p class="text-lg mb-6 text-gray-200">
+                From building deep learning models for market prediction to facial emotion recognition and AI-powered dashboards, I've brought real-world ideas to life for global clients.
+              <p class="text-lg mb-6 text-gray-200">
+              I love working where creativity meets code, exploring how data and design can create powerful digital experiences.
+Always learning. Always building. Always pushing AI beyond the ordinary.
+              </p>
+              <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="flex items-center"><i data-feather="cpu" class="mr-2 text-blue-400"></i><span>AI/ML Systems</span></div>
+                <div class="flex items-center"><i data-feather="database" class="mr-2 text-blue-400"></i><span>Data Handling & Deployment</span></div>
+                <div class="flex items-center"><i data-feather="activity" class="mr-2 text-blue-400"></i><span>Data Visualization</span></div>
+                <div class="flex items-center"><i data-feather="cpu" class="mr-2 text-blue-400"></i><span>Deep Learning</span></div>
+              </div>
+
+              <h3 class="text-2xl font-bold mb-4 glow-text">Soft Skills</h3>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-200">Analytical Thinking</span>
+                    <span class="text-cyan-400">90%</span>
+                  </div>
+                  <div class="w-full bg-gray-900 rounded-full h-2">
+                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 90%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-200">Problem-solving</span>
+                    <span class="text-cyan-400">85%</span>
+                  </div>
+                  <div class="w-full bg-gray-900 rounded-full h-2">
+                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-200">Communication</span>
+                    <span class="text-cyan-400">80%</span>
+                  </div>
+                  <div class="w-full bg-gray-900 rounded-full h-2">
+                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 80%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-200">Team Collaboration</span>
+                    <span class="text-cyan-400">95%</span>
+                  </div>
+                  <div class="w-full bg-gray-900 rounded-full h-2">
+                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 95%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-gray-900 bg-opacity-50 backdrop-blur-sm border border-purple-500/30 rounded-xl p-8">
+              <h3 class="text-3xl font-bold mb-6 glow-text">Education</h3>
+              <div class="space-y-6">
+                <div class="border-l-2 border-cyan-400 pl-6 py-2">
+                  <h4 class="text-xl font-bold text-cyan-400">Bachelors Of Artificial Intelligence</h4>
+                  <p class="text-gray-300">UMT | 11/2021 – 07/2025 | Pakistan</p>
+                  <p class="text-gray-400 mt-2">Specialized in Machine Learning, Neural Networks and AI applications development.</p>
+                </div>
+                <div class="border-l-2 border-purple-400 pl-6 py-2">
+                  <h4 class="text-xl font-bold text-purple-400">Intermediate in Computer Science</h4>
+                  <p class="text-gray-300">Punjab Group of Colleges | 09/2019 – 06/2021 | Pakistan</p>
+                  <p class="text-gray-400 mt-2">Focus on fundamental programming, data structures and computer science principles.</p>
+                </div>
+                <div class="border-l-2 border-blue-400 pl-6 py-2">
+                  <h4 class="text-xl font-bold text-blue-400">Matriculation in Science</h4>
+                  <p class="text-gray-300">Sir Syed Pilot High School Wazirabad | 03/2017 – 04/2019 | Pakistan</p>
+                  <p class="text-gray-400 mt-2">Core science subjects including Mathematics, Physics and Computer Science.</p>
+                </div>
+                <div class="border-l-2 border-green-400 pl-6 py-2">
+                  <h4 class="text-xl font-bold text-blue-400">Certifications</h4>
+                  <ul class="list-disc list-inside text-gray-400 space-y-1 mt-2">
+                    <li>Machine Learning - Stanford University (Coursera)</li>
+                    <li>Deep Learning Specialization - deeplearning.ai</li>
+                    <li>Python for Data Science and AI - IBM (Coursera)</li>
+                    <li>Computer Vision Fundamentals - Coursera/Udemy</li>
+                    <li>Data Analysis with Python - IBM (Coursera)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="py-20">
+        <h2 class="text-3xl md:text-5xl font-bold mb-16">
+          Let's <span class="text-purple-400 glow-text">Connect</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div>
+            <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
+            <form id="contactForm" class="space-y-6" action="https://formspree.io/f/movklznd" method="POST">
+              <div>
+                <label for="name" class="block mb-2">Name</label>
+                <input type="text" id="name" name="name" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+              </div>
+              <div>
+                <label for="email" class="block mb-2">Email</label>
+                <input type="email" id="email" name="email" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+              </div>
+              <div>
+                <label for="message" class="block mb-2">Message</label>
+                <textarea id="message" name="message" rows="5" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400"></textarea>
+              </div>
+              <button type="submit" id="submitBtn" class="px-8 py-3 bg-cyan-400 text-black rounded-full font-medium hover:bg-cyan-500 transition btn-glow">
+                <span id="btnText">Send Message</span>
+                <span id="btnLoader" class="hidden">
+                  <span class="inline-block w-2 h-2 mx-0.5 bg-current rounded-full animate-pulse"></span>
+                  <span class="inline-block w-2 h-2 mx-0.5 bg-current rounded-full animate-pulse delay-100"></span>
+                  <span class="inline-block w-2 h-2 mx-0.5 bg-current rounded-full animate-pulse delay-200"></span>
+                </span>
+              </button>
+              <input type="text" name="_gotcha" style="display:none">
+              <div id="formSuccess" class="hidden mt-4 p-4 bg-green-500/20 border border-green-400 rounded-lg text-green-200">
+                Message sent successfully! I'll get back to you soon.
+              </div>
+              <div id="formError" class="hidden mt-4 p-4 bg-red-500/20 border border-red-400 rounded-lg text-red-200">
+                Failed to send message. Please try again later.
+              </div>
+            </form>
+            <script>
+              const form = document.getElementById('contactForm');
+              const submitBtn = document.getElementById('submitBtn');
+              const btnText = document.getElementById('btnText');
+              const btnLoader = document.getElementById('btnLoader');
+              const successMessage = document.getElementById('formSuccess');
+              const errorMessage = document.getElementById('formError');
+              
+              form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                btnText.textContent = "Sending";
+                btnLoader.classList.remove('hidden');
+                
+                try {
+                  const formData = new FormData(form);
+                  const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                      'Accept': 'application/json'
+                    }
+                  });
+                  
+                  if (response.ok) {
+                    // Success
+                    form.reset();
+                    successMessage.classList.remove('hidden');
+                    errorMessage.classList.add('hidden');
+                    setTimeout(() => {
+                      successMessage.classList.add('hidden');
+                    }, 5000);
+                  } else {
+                    // Server error
+                    throw new Error('Server error');
+                  }
+                } catch (error) {
+                  // Network or other error
+                  errorMessage.classList.remove('hidden');
+                  successMessage.classList.add('hidden');
+                  setTimeout(() => {
+                    errorMessage.classList.add('hidden');
+                  }, 5000);
+                } finally {
+                  // Reset button state
+                  submitBtn.disabled = false;
+                  btnText.textContent = "Send Message";
+                  btnLoader.classList.add('hidden');
+                }
+              });
+            </script>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold mb-6">Contact Info</h3>
+            <div class="space-y-4">
+              <div class="flex items-center">
+                <i data-feather="mail" class="mr-4 text-cyan-400"></i><span class="text-gray-200">ahmedkillybp@gmail.com</span>
+              </div>
+              <div class="flex items-center">
+                <i data-feather="map-pin" class="mr-4 text-cyan-400"></i><span class="text-gray-200">Wazirabad, Pakistan</span>
+              </div>
+            </div>
+            <div class="mt-12">
+              <h3 class="text-2xl font-bold mb-6">Follow Me</h3>
+              <div class="flex space-x-4">
+                <a href="https://github.com/PolatAlemdarPLT34" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-cyan-400 hover:text-black transition btn-glow"><i data-feather="github"></i></a>
+                <a href="https://x.com/ahmedrebel16?s=21" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="twitter"></i></a>
+                <a href="https://www.linkedin.com/in/ahmad-nadeem-a75614288" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="linkedin"></i></a>
+                <a href="https://www.instagram.com/a.h.m.e.d_nadeem" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="instagram"></i></a>
+                <a href="https://www.fiverr.com/s/8zQzwGp" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-green-500 hover:text-white transition btn-glow">
+                  <i data-feather="dollar-sign"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="py-8 text-center text-gray-500">
+      <p class="text-gray-300">© 2025 Ahmad Nadeem Butt. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    // =============================================
+    // NEURAL NETWORK CANVAS - Connected Nodes
+    // =============================================
+    const neuralCanvas = document.getElementById('neural-canvas');
+    const neuralCtx = neuralCanvas.getContext('2d');
+    neuralCanvas.width = window.innerWidth;
+    neuralCanvas.height = window.innerHeight;
+
+    const neurons = [];
+    const neuronCount = 40;
+    const maxDistance = 120;
+    let mouseX = 0, mouseY = 0;
+
+    class Neuron {
+      constructor() {
+        this.x = Math.random() * neuralCanvas.width;
+        this.y = Math.random() * neuralCanvas.height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 2 + 1;
+        this.pulse = Math.random() * Math.PI * 2;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.pulse += 0.05;
+
+        if (this.x < 0 || this.x > neuralCanvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > neuralCanvas.height) this.vy *= -1;
+
+        const dx = mouseX - this.x;
+        const dy = mouseY - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          this.x -= dx * 0.01;
+          this.y -= dy * 0.01;
+        }
+      }
+
+      draw() {
+        const pulseSize = Math.sin(this.pulse) * 0.5 + 1;
+        neuralCtx.beginPath();
+        neuralCtx.arc(this.x, this.y, this.radius * pulseSize, 0, Math.PI * 2);
+        neuralCtx.fillStyle = `rgba(0, 255, 255, ${0.8 + Math.sin(this.pulse) * 0.2})`;
+        neuralCtx.fill();
+        neuralCtx.shadowBlur = 10;
+        neuralCtx.shadowColor = 'rgba(0, 255, 255, 0.5)';
+      }
+    }
+
+    for (let i = 0; i < neuronCount; i++) {
+      neurons.push(new Neuron());
+    }
+
+    function connectNeurons() {
+      for (let i = 0; i < neurons.length; i++) {
+        for (let j = i + 1; j < neurons.length; j++) {
+          const dx = neurons[i].x - neurons[j].x;
+          const dy = neurons[i].y - neurons[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < maxDistance) {
+            const opacity = (1 - dist / maxDistance) * 0.2;
+            neuralCtx.beginPath();
+            neuralCtx.moveTo(neurons[i].x, neurons[i].y);
+            neuralCtx.lineTo(neurons[j].x, neurons[j].y);
+            neuralCtx.strokeStyle = `rgba(138, 43, 226, ${opacity})`;
+            neuralCtx.lineWidth = 0.5;
+            neuralCtx.stroke();
+          }
+        }
+      }
+    }
+
+    let lastTime = 0;
+    const fpsLimit = 30;
+    const frameInterval = 1000 / fpsLimit;
+
+    function animateNeural(timestamp) {
+      requestAnimationFrame(animateNeural);
+      
+      const deltaTime = timestamp - lastTime;
+      if (deltaTime < frameInterval) return;
+      
+      lastTime = timestamp - (deltaTime % frameInterval);
+      
+      neuralCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
+      
+      // Process updates first
+      neurons.forEach(n => n.update());
+      
+      // Then process draws
+      neurons.forEach(n => n.draw());
+      
+      connectNeurons();
+    }
+    requestAnimationFrame(animateNeural);
+
+    // =============================================
+    // PARTICLE FLOW CANVAS - Data Streams
+    // =============================================
+    const particleCanvas = document.getElementById('particle-canvas');
+    const particleCtx = particleCanvas.getContext('2d');
+    particleCanvas.width = window.innerWidth;
+    particleCanvas.height = window.innerHeight;
+
+    const particles = [];
+    const particleCount = 50;
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * particleCanvas.width;
+        this.y = Math.random() * particleCanvas.height;
+        this.vx = (Math.random() - 0.5) * 2;
+        this.vy = (Math.random() - 0.5) * 2;
+        this.life = Math.random() * 100;
+        this.maxLife = 100;
+        this.color = Math.random() > 0.5 ? '0, 255, 255' : '138, 43, 226';
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.life--;
+
+        if (this.life <= 0 || this.x < 0 || this.x > particleCanvas.width || this.y < 0 || this.y > particleCanvas.height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        const opacity = this.life / this.maxLife;
+        particleCtx.beginPath();
+        particleCtx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+        particleCtx.fillStyle = `rgba(${this.color}, ${opacity * 0.6})`;
+        particleCtx.fill();
+        
+        particleCtx.beginPath();
+        particleCtx.moveTo(this.x, this.y);
+        particleCtx.lineTo(this.x - this.vx * 5, this.y - this.vy * 5);
+        particleCtx.strokeStyle = `rgba(${this.color}, ${opacity * 0.3})`;
+        particleCtx.lineWidth = 1;
+        particleCtx.stroke();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    let particleLastTime = 0;
+    
+    function animateParticles(timestamp) {
+      requestAnimationFrame(animateParticles);
+      
+      const deltaTime = timestamp - particleLastTime;
+      if (deltaTime < frameInterval) return;
+      
+      particleLastTime = timestamp - (deltaTime % frameInterval);
+      
+      particleCtx.fillStyle = 'rgba(5, 10, 21, 0.05)';
+      particleCtx.fillRect(0, 0, particleCanvas.width, particleCanvas.height);
+      
+      // Batch updates
+      particles.forEach(p => p.update());
+      
+      // Batch draws
+      particles.forEach(p => p.draw());
+    }
+    requestAnimationFrame(animateParticles);
+
+    // =============================================
+    // GRID CANVAS - Animated Waves
+    // =============================================
+    const gridCanvas = document.getElementById('grid-canvas');
+    const gridCtx = gridCanvas.getContext('2d');
+    gridCanvas.width = window.innerWidth;
+    gridCanvas.height = window.innerHeight;
+
+    let waveOffset = 0;
+    let frameCount = 0;
+
+    let gridLastTime = 0;
+    
+    function drawGrid(timestamp) {
+      requestAnimationFrame(drawGrid);
+      
+      const deltaTime = timestamp - gridLastTime;
+      if (deltaTime < frameInterval * 2) return; // Slower update for grid
+      
+      gridLastTime = timestamp - (deltaTime % (frameInterval * 2));
+      
+      gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+      gridCtx.strokeStyle = 'rgba(138, 43, 226, 0.08)';
+      gridCtx.lineWidth = 1;
+
+      const gridSize = 80;
+      waveOffset += 0.02;
+
+      // Optimize by caching calculations
+      const cols = Math.ceil(gridCanvas.width / gridSize);
+      const rows = Math.ceil(gridCanvas.height / gridSize);
+      
+      for (let i = 0; i < cols; i++) {
+        const x = i * gridSize;
+        for (let j = 0; j < rows; j++) {
+          const y = j * gridSize;
+          const wave = Math.sin(x * 0.01 + y * 0.01 + waveOffset) * 3;
+          gridCtx.beginPath();
+          gridCtx.moveTo(x, y + wave);
+          gridCtx.lineTo(x + gridSize, y + wave);
+          gridCtx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(drawGrid);
+
+    // =============================================
+    // MATRIX CANVAS - Falling Code Effect
+    // =============================================
+    const matrixCanvas = document.getElementById('matrix-canvas');
+    const matrixCtx = matrixCanvas.getContext('2d');
+    matrixCanvas.width = window.innerWidth;
+    matrixCanvas.height = window.innerHeight;
+
+    const chars = '01アイウエオカキクケコサシスセソ';
+    const fontSize = 14;
+    const columns = matrixCanvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    let matrixLastTime = 0;
+    
+    function drawMatrix(timestamp) {
+      requestAnimationFrame(drawMatrix);
+      
+      const deltaTime = timestamp - matrixLastTime;
+      if (deltaTime < 100) return; // Limit to ~10fps for matrix
+    
+      matrixLastTime = timestamp;
+      
+      matrixCtx.fillStyle = 'rgba(0, 10, 0, 0.05)';
+      matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+      
+      matrixCtx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+      matrixCtx.font = fontSize + 'px monospace';
+
+      // Batch updates and draws
+      for (let i = 0; i < drops.length; i++) {
+        if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        } else {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          matrixCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+          drops[i]++;
+        }
+      }
+    }
+    requestAnimationFrame(drawMatrix);
+
+    // =============================================
+    // MOUSE TRACKING
+    // =============================================
+    let lastMouseUpdate = 0;
+    document.addEventListener('mousemove', (e) => {
+      const now = performance.now();
+      if (now - lastMouseUpdate < 16) return; // ~60fps for mouse updates
+      lastMouseUpdate = now;
+      
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      const cursor = document.querySelector('.custom-cursor');
+      const cursorOuter = document.querySelector('.custom-cursor-outer');
+      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      cursorOuter.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    });
+
+    // =============================================
+    // RESIZE HANDLING
+    // =============================================
+    window.addEventListener('resize', () => {
+      neuralCanvas.width = window.innerWidth;
+      neuralCanvas.height = window.innerHeight;
+      particleCanvas.width = window.innerWidth;
+      particleCanvas.height = window.innerHeight;
+      gridCanvas.width = window.innerWidth;
+      gridCanvas.height = window.innerHeight;
+      matrixCanvas.width = window.innerWidth;
+      matrixCanvas.height = window.innerHeight;
+    });
+
+    // =============================================
+    // GSAP ANIMATIONS
+    // =============================================
+    gsap.from('nav', { duration: 1, y: -50, opacity: 0 });
+    gsap.from('h1', { duration: 1, y: 50, opacity: 0, delay: 0.3 });
+    gsap.from('.typing-text', { duration: 1, y: 30, opacity: 0, delay: 0.6 });
+
+    // =============================================
+    // TYPING ANIMATION
+    // =============================================
+    const texts = ["AI Developer", "Machine Learning Engineer", "Creative Technologist", "Neural Network Specialist"];
+    let count = 0, index = 0, currentText = "", letter = "", isDeleting = false;
+
+    (function type() {
+      if (count === texts.length) count = 0;
+      currentText = texts[count];
+      if (isDeleting) {
+        letter = currentText.substring(0, index - 1);
+        index--;
+      } else {
+        letter = currentText.substring(0, index + 1);
+        index++;
+      }
+      document.querySelector('.typing-text').textContent = letter;
+      let typeSpeed = isDeleting ? 50 : 100;
+      if (!isDeleting && letter === currentText) {
+        typeSpeed = 2000;
+        isDeleting = true;
+      } else if (isDeleting && letter === "") {
+        isDeleting = false;
+        count++;
+        typeSpeed = 500;
+      }
+      setTimeout(type, typeSpeed);
+    })();
+
+    // Initialize feather icons
+    feather.replace();
+    // Add Fiverr icon
+    feather.icons['dollar-sign'] = {
+      contents: '<path d="M12 1L3 5v6l9 4 9-4V5l-9-4zM3 5l9 4 9-4M3 11l9 4 9-4M3 17l9 4 9-4"/>'
+    };
+  </script>
+</body>
+</html>

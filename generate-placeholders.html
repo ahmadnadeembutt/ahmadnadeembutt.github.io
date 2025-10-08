@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Project Placeholder Images</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+        .placeholder { margin: 20px 0; border: 2px solid #333; background:#fff; padding: 12px; border-radius: 8px; }
+        .instructions { background: #fff; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .actions { margin-top: 10px; }
+        .btn { display:inline-block; background:#111827; color:#fff; padding:8px 12px; border-radius:6px; text-decoration:none; margin-right:8px; }
+        .btn.secondary { background:#374151; }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h2>🎨 Project Placeholder Images</h2>
+        <p><strong>Instructions:</strong></p>
+        <ol>
+            <li>Right-click on each image below</li>
+            <li>Select "Save image as..."</li>
+            <li>Save to: <code>assets/images/projects/</code></li>
+            <li>Use the filename shown above each image</li>
+        </ol>
+        <p><em>These are temporary placeholders. Replace them with your actual project screenshots later.</em></p>
+    </div>
+
+    <div class="placeholder">
+        <h3>neural-network-visualizer.jpg</h3>
+        <img id="neural-img" width="400" height="300">
+        <div class="actions">
+            <a id="neural-download" class="btn" download="neural-network-visualizer.jpg">Download</a>
+        </div>
+    </div>
+
+    <div class="placeholder">
+        <h3>cdps.jpg</h3>
+        <img id="cdps-img" width="400" height="300">
+        <div class="actions">
+            <a id="cdps-download" class="btn" download="cdps.jpg">Download</a>
+        </div>
+    </div>
+
+    <div class="placeholder">
+        <h3>computer-vision-api.jpg</h3>
+        <img id="vision-img" width="400" height="300">
+        <div class="actions">
+            <a id="vision-download" class="btn" download="computer-vision-api.jpg">Download</a>
+        </div>
+    </div>
+
+    <div class="placeholder">
+        <h3>nlp-processor.jpg</h3>
+        <img id="nlp-img" width="400" height="300">
+        <div class="actions">
+            <a id="nlp-download" class="btn" download="nlp-processor.jpg">Download</a>
+        </div>
+    </div>
+
+    <div class="placeholder">
+        <h3>garpus-ai.jpg</h3>
+        <img id="garpus-img" width="400" height="300">
+        <div class="actions">
+            <a id="garpus-download" class="btn" download="garpus-ai.jpg">Download</a>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <a id="download-all" class="btn secondary" href="#">Download All</a>
+        <p style="margin-top:6px; color:#374151">
+            After downloading, move the files into <code>assets/images/projects/</code> and refresh your site.
+        </p>
+    </div>
+
+    <script>
+        function createPlaceholder(canvasId, text, color) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 300;
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, 400, 300);
+            
+            // Text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 20px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(text, 200, 150);
+            
+            // Icon
+            ctx.font = '80px Arial';
+            ctx.fillText('⚡', 200, 100);
+            
+            return canvas.toDataURL('image/jpeg');
+        }
+
+        // Generate and display placeholders
+        const neuralSrc = createPlaceholder('neural', 'Neural Network Visualizer', '#1e40af');
+        const cdpsSrc = createPlaceholder('cdps', 'CDPS', '#7c3aed');
+        const visionSrc = createPlaceholder('vision', 'Computer Vision API', '#059669');
+        const nlpSrc = createPlaceholder('nlp', 'Natural Language Processor', '#d97706');
+        const garpusSrc = createPlaceholder('garpus', 'Garpus AI', '#10b981');
+
+        document.getElementById('neural-img').src = neuralSrc;
+        document.getElementById('cdps-img').src = cdpsSrc;
+        document.getElementById('vision-img').src = visionSrc;
+        document.getElementById('nlp-img').src = nlpSrc;
+        document.getElementById('garpus-img').src = garpusSrc;
+
+        // Wire up download links
+        document.getElementById('neural-download').href = neuralSrc;
+        document.getElementById('cdps-download').href = cdpsSrc;
+        document.getElementById('vision-download').href = visionSrc;
+        document.getElementById('nlp-download').href = nlpSrc;
+        document.getElementById('garpus-download').href = garpusSrc;
+
+        // Download all handler
+        document.getElementById('download-all').addEventListener('click', function(e) {
+            e.preventDefault();
+            const pairs = [
+              { href: neuralSrc, name: 'neural-network-visualizer.jpg' },
+              { href: cdpsSrc, name: 'cdps.jpg' },
+              { href: visionSrc, name: 'computer-vision-api.jpg' },
+              { href: nlpSrc, name: 'nlp-processor.jpg' },
+              { href: garpusSrc, name: 'garpus-ai.jpg' }
+            ];
+            pairs.forEach(p => {
+              const a = document.createElement('a');
+              a.href = p.href;
+              a.download = p.name;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+            });
+        });
+    </script>
+</body>
+</html>
