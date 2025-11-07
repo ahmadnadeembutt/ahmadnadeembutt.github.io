@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Litigation Case Intelligence System - Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #050a15 50%, #0d1b2a 100%);
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: rgba(138, 43, 226, 0.2);
+            color: #8a2be2;
+            font-weight: 600;
+        }
+        td {
+            color: #e0e0e0;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-cyan-900 to-blue-900 py-4 sm:py-6">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 glow-text">Litigation Case Intelligence System</h1>
+            <p class="text-sm sm:text-base text-gray-300 mb-6">AI-powered platform for automated case classification and legal data extraction</p>
+            <a href="../../../index.html" class="inline-flex items-center px-6 py-3 bg-cyan-400 hover:bg-cyan-500 text-black rounded-full font-medium btn-glow transition-all duration-300">
+                <i data-feather="arrow-left" class="mr-2"></i>
+                Back to Portfolio
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <!-- Project Overview -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Project Overview</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <p class="text-lg text-gray-300 mb-6">
+                    The Litigation Case Intelligence System is a comprehensive AI-powered platform designed to automatically classify and extract insights from large volumes of legal case data. It leverages advanced Natural Language Processing (NLP) and machine learning techniques to assign case categories, identify key entities, and streamline legal data management — all while maintaining full local execution and data privacy.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-cyan-400">Key Features</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Automated case classification using XGBoost</li>
+                            <li>• Named Entity Recognition (NER) for people, organizations, and locations</li>
+                            <li>• Confidence-based auto-labeling workflow</li>
+                            <li>• Closed-loop retraining with gold-standard data</li>
+                            <li>• Scalable ingestion of 6.7M+ legal records</li>
+                            <li>• 20 canonical legal categories with structured mapping</li>
+                            <li>• Comprehensive 100+ page documentation suite</li>
+                            <li>• Local-only execution (no external API dependencies)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-blue-400">Technologies</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Python (scikit-learn, XGBoost, spaCy, sentence-transformers)</li>
+                            <li>• Pandas & NumPy for data engineering</li>
+                            <li>• TF-IDF and embeddings-based text representation</li>
+                            <li>• PostgreSQL / Local CSV storage</li>
+                            <li>• Matplotlib & Seaborn for visualization</li>
+                            <li>• Shell automation for reproducible execution</li>
+                            <li>• YAML configuration and logging architecture</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Architecture -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">System Architecture</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="text-center">
+                        <div class="bg-cyan-400 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="database" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Data Layer</h3>
+                        <p class="text-gray-400 text-sm">Ingests and processes over 6.7 million case records from multiple structured and semi-structured CSV/Excel sources. Handles custom delimiters, encoding issues, and inconsistent field schemas. Performs label canonicalization and strategic sampling for efficient training.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-cyan-400 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="cpu" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">AI Engine</h3>
+                        <p class="text-gray-400 text-sm">XGBoost model trained to classify cases into 20 canonical categories. Sentence-transformer embeddings for semantic understanding of case descriptions. NER module detects people, organizations, and locations within case texts.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-cyan-400 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                            <i data-feather="bar-chart-2" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Insights Layer</h3>
+                        <p class="text-gray-400 text-sm">Confidence-based routing for auto-labeling, manual review, and disagreement analysis. Detailed metrics and visualization outputs for model validation and decision support.</p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 space-y-4">
+                    <h3 class="text-xl font-semibold mb-4 text-purple-400">Data Layer Details</h3>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-300">• Ingests and processes over 6.7 million case records from multiple structured and semi-structured CSV/Excel sources</p>
+                        <p class="text-gray-300 mt-2">• Handles custom delimiters, encoding issues, and inconsistent field schemas</p>
+                        <p class="text-gray-300 mt-2">• Performs label canonicalization and strategic sampling for efficient training</p>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mb-4 text-purple-400 mt-6">AI Engine Details</h3>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-300">• XGBoost model trained to classify cases into 20 canonical categories</p>
+                        <p class="text-gray-300 mt-2">• Sentence-transformer embeddings for semantic understanding of case descriptions</p>
+                        <p class="text-gray-300 mt-2">• NER module detects people, organizations, and locations within case texts</p>
+                    </div>
+                    
+                    <h3 class="text-xl font-semibold mb-4 text-purple-400 mt-6">Insights Layer Details</h3>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-300">• Confidence-based routing for auto-labeling, manual review, and disagreement analysis</p>
+                        <p class="text-gray-300 mt-2">• Detailed metrics and visualization outputs for model validation and decision support</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Features -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Core Features</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="tag" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Case Classification</h3>
+                    </div>
+                    <p class="text-gray-400 mb-3">An optimized XGBoost classifier achieves 89.49% accuracy across 20 canonical legal categories, accurately labeling 80% of cases automatically.</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="search" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Entity Recognition (NER)</h3>
+                    </div>
+                    <p class="text-gray-400 mb-3">Extracts structured entities — including names, organizations, and locations — into machine-readable JSON outputs for downstream analytics.</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="trending-up" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Confidence Routing System</h3>
+                    </div>
+                    <p class="text-gray-400 mb-3">Automatically flags high-confidence predictions (≥0.8) for auto-labeling, medium-confidence for human review, and low-confidence for manual validation.</p>
+                </div>
+
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="refresh-cw" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Closed-Loop Retraining</h3>
+                    </div>
+                    <p class="text-gray-400 mb-3">Supports iterative retraining through a gold-standard feedback pipeline that continuously improves performance as new verified data is introduced.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Implementation -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Technical Implementation</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-cyan-400">Model Architecture</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start">
+                                <i data-feather="check" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                <span><strong>Primary Model:</strong> XGBoost Gradient Boosting (199 rounds, depth 6, 89.49% accuracy)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                <span><strong>Baseline Model:</strong> Logistic Regression (85.07% accuracy)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                <span><strong>NER Engine:</strong> spaCy-based entity tagger integrated with structured JSON output</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i data-feather="check" class="w-5 h-5 text-green-400 mr-3 mt-0.5 flex-shrink-0"></i>
+                                <span><strong>Data Representation:</strong> TF-IDF + 384-dimensional semantic embeddings</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">Performance Metrics</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Logistic Regression</th>
+                                        <th>XGBoost</th>
+                                        <th>Improvement</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Accuracy</td>
+                                        <td>85.07%</td>
+                                        <td>89.49%</td>
+                                        <td class="text-green-400">+4.42%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cross-Validation</td>
+                                        <td>85.7% ± 1.3%</td>
+                                        <td>89.03% ± 0.52%</td>
+                                        <td class="text-green-400">Stable</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Auto-Labelable Cases</td>
+                                        <td>-</td>
+                                        <td>5,946 (80.4%)</td>
+                                        <td class="text-green-400">+80% workflow automation</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Use Cases & Applications</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-cyan-800 to-blue-800 rounded-xl p-6">
+                    <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i data-feather="briefcase" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Law Firms & Legal Analysts</h3>
+                    <p class="text-gray-300">Automated case categorization for large-scale litigation datasets and discovery pipelines.</p>
+                </div>
+                <div class="bg-gradient-to-br from-cyan-800 to-blue-800 rounded-xl p-6">
+                    <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i data-feather="shield" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Insurance & Compliance</h3>
+                    <p class="text-gray-300">Rapid classification of claim narratives to detect injury types, liability categories, and related entities.</p>
+                </div>
+                <div class="bg-gradient-to-br from-cyan-800 to-blue-800 rounded-xl p-6">
+                    <div class="bg-cyan-400 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <i data-feather="check-circle" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Data Labeling Operations</h3>
+                    <p class="text-gray-300">Confidence-based auto-labeling and retraining workflow reduces manual review effort by over 70%.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results & Impact -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Results & Impact</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-cyan-400">Quantitative Results</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>89.49% model accuracy (XGBoost)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>83.7% model agreement (cross-model validation)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="database" class="w-5 h-5 text-blue-400 mr-3"></i>
+                                <span>6.7M rows processed efficiently on local machine</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check-circle" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>80.4% cases auto-labelable (≥0.80 confidence)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="alert-circle" class="w-5 h-5 text-yellow-400 mr-3"></i>
+                                <span>10.3% low-confidence cases flagged for manual review</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">Business Impact</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i data-feather="dollar-sign" class="w-5 h-5 text-green-400 mr-3"></i>
+                                <span>Drastically reduces manual labeling effort and costs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="clock" class="w-5 h-5 text-yellow-400 mr-3"></i>
+                                <span>Enables faster case triage and data analysis</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="lock" class="w-5 h-5 text-blue-400 mr-3"></i>
+                                <span>Maintains full data privacy (no external cloud use)</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="arrow-up" class="w-5 h-5 text-purple-400 mr-3"></i>
+                                <span>Provides scalable foundation for future secondary keyword classification</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Enhancements -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Future Enhancements</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-cyan-400">Planned Features</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Secondary keyword prediction (e.g., "Med-Mal – Cancer")</li>
+                            <li>• Taxonomy expansion to support subcategories</li>
+                            <li>• Entity relationship mapping between case participants</li>
+                            <li>• Lightweight web dashboard for case review and visualization</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-blue-400">Technical Improvements</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Bayesian inference layer for secondary keyword prediction</li>
+                            <li>• Automated model retraining pipeline</li>
+                            <li>• Integration with PostgreSQL for large-scale deployment</li>
+                            <li>• Additional subtype-level labeled data for enhanced accuracy</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">&copy; 2025 Ahmad Nadeem Butt. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
+
