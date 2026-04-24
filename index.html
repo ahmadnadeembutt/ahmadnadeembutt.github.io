@@ -173,20 +173,26 @@
       font-family: 'Archivo', sans-serif;
     }
     
-    /* Unified Canvas Background */
-    #neural-canvas {
+    /* Background Canvases */
+    #matrix-canvas, #neural-canvas {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
+    }
+    #matrix-canvas {
+      z-index: 0;
+      opacity: 0.15;
+    }
+    #neural-canvas {
       z-index: 1;
       opacity: 0.8;
     }
     
     @media (prefers-reduced-motion: reduce) {
-      #neural-canvas { display: none; }
+      #matrix-canvas, #neural-canvas { display: none; }
       .float-animation { animation: none; }
       .btn-glow { transition: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
@@ -420,8 +426,12 @@
       color: #0f0 !important;
       border: 1px solid #0f0 !important;
     }
-    body.hack-mode img {
+    body.hack-mode img:not([alt*="Profile Photo"]) {
       filter: grayscale(100%) sepia(100%) hue-rotate(80deg) brightness(0.8) contrast(150%) !important;
+    }
+    body.hack-mode img[alt*="Profile Photo"],
+    body.hack-mode .profile-glow img {
+      filter: none !important;
     }
     body.hack-mode .terminal-header {
       border-bottom: 1px solid #0f0 !important;
@@ -430,10 +440,58 @@
     body.hack-mode .float-animation {
       animation: none !important;
     }
+    body.hack-mode #neural-canvas {
+      display: none !important;
+    }
+    body.hack-mode #matrix-canvas {
+      opacity: 0.8 !important;
+      z-index: 2 !important;
+    }
+    
+    /* Hack Transition Animation */
+    @keyframes hack-glitch {
+      0% { filter: contrast(1) brightness(1); transform: translate(0) scale(1); }
+      10% { filter: contrast(2) brightness(2) invert(1); transform: translate(-5px, 5px) scale(1.02); }
+      20% { filter: contrast(1) brightness(1) invert(0); transform: translate(5px, -5px) scale(0.98); }
+      30% { filter: contrast(2) brightness(1.5) hue-rotate(90deg); transform: translate(-5px, -5px) scale(1.01); }
+      40% { filter: contrast(1) brightness(1) hue-rotate(0deg); transform: translate(5px, 5px) scale(1); }
+      50% { opacity: 0; }
+      60% { opacity: 1; filter: contrast(2) brightness(1.5) sepia(1) hue-rotate(80deg); }
+      100% { filter: contrast(1) brightness(1); transform: translate(0) scale(1); }
+    }
+    .hack-transitioning {
+      animation: hack-glitch 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+      pointer-events: none;
+    }
+    .hack-flash-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f0;
+      z-index: 999999;
+      pointer-events: none;
+      opacity: 0;
+      mix-blend-mode: screen;
+    }
+    @keyframes flash-green {
+      0% { opacity: 0; }
+      20% { opacity: 0.8; background: #fff; }
+      40% { opacity: 0; }
+      50% { opacity: 0.9; background: #0f0; }
+      100% { opacity: 0; }
+    }
+    .hack-transitioning .hack-flash-overlay {
+      animation: flash-green 0.8s ease-out;
+    }
   </style>
 </head>
 <body>
-  <!-- Unified Background Canvas -->
+  <div class="hack-flash-overlay"></div>
+  
+  <!-- Background Canvases -->
+  <canvas id="matrix-canvas"></canvas>
   <canvas id="neural-canvas"></canvas>
 
   <!-- Custom Cursor -->
@@ -773,11 +831,11 @@
             <div class="mt-12">
               <h3 class="text-2xl font-bold mb-6 text-gray-100">Follow Me</h3>
               <div class="flex space-x-4 flex-wrap gap-y-4">
-                <a href="https://github.com/PolatAlemdarPLT34" aria-label="GitHub Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="github"></i></a>
+                <a href="https://github.com/ahmadnadeembutt" aria-label="GitHub Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="github"></i></a>
                 <a href="https://x.com/ahmedrebel16?s=21" aria-label="Twitter Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="twitter"></i></a>
-                <a href="https://www.linkedin.com/in/ahmad-nadeem-a75614288" aria-label="LinkedIn Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="linkedin"></i></a>
+                <a href="https://www.linkedin.com/in/ahmad-nadeem-butt-a75614288?utm_source=share_via&utm_content=profile&utm_medium=member_ios" aria-label="LinkedIn Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="linkedin"></i></a>
                 <a href="https://www.instagram.com/a.h.m.e.d_nadeem" aria-label="Instagram Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="instagram"></i></a>
-                <a href="https://www.fiverr.com/s/8zQzwGp" aria-label="Fiverr Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300">
+                <a href="https://www.fiverr.com/ahmadnadeembutt" aria-label="Fiverr Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300">
                   <i data-feather="dollar-sign"></i>
                 </a>
               </div>
@@ -810,12 +868,20 @@
     });
 
     // =============================================
-    // NEURAL NETWORK CANVAS - Connected Nodes
+    // BACKGROUND CANVASES
     // =============================================
     const neuralCanvas = document.getElementById('neural-canvas');
     const neuralCtx = neuralCanvas.getContext('2d');
-    neuralCanvas.width = window.innerWidth;
-    neuralCanvas.height = window.innerHeight;
+    const matrixCanvas = document.getElementById('matrix-canvas');
+    const matrixCtx = matrixCanvas.getContext('2d');
+    
+    function resizeCanvases() {
+      neuralCanvas.width = window.innerWidth;
+      neuralCanvas.height = window.innerHeight;
+      matrixCanvas.width = window.innerWidth;
+      matrixCanvas.height = window.innerHeight;
+    }
+    resizeCanvases();
 
     const neurons = [];
     const neuronCount = 40;
@@ -894,49 +960,47 @@
     const fpsLimit = 30;
     const frameInterval = 1000 / fpsLimit;
 
-    function animateNeural(timestamp) {
-      requestAnimationFrame(animateNeural);
+    function animateBackgrounds(timestamp) {
+      requestAnimationFrame(animateBackgrounds);
       
       const deltaTime = timestamp - lastTime;
       if (deltaTime < frameInterval) return;
       
       lastTime = timestamp - (deltaTime % frameInterval);
-      
-      if (isHackMode) {
-        if (matrixDrops.length === 0) {
-          const columns = Math.floor(neuralCanvas.width / matrixFontSize);
-          for (let i = 0; i < columns; i++) matrixDrops[i] = Math.random() * -100;
-        }
 
-        neuralCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-        neuralCtx.fillRect(0, 0, neuralCanvas.width, neuralCanvas.height);
-        
-        neuralCtx.fillStyle = '#0f0';
-        neuralCtx.font = matrixFontSize + 'px monospace';
-        
-        for (let i = 0; i < matrixDrops.length; i++) {
-          const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-          neuralCtx.fillText(text, i * matrixFontSize, matrixDrops[i] * matrixFontSize);
-          
-          if (matrixDrops[i] * matrixFontSize > neuralCanvas.height && Math.random() > 0.975) {
-            matrixDrops[i] = 0;
-          }
-          matrixDrops[i]++;
-        }
-        return;
+      // --- MATRIX ANIMATION ---
+      if (matrixDrops.length === 0) {
+        const columns = Math.floor(matrixCanvas.width / matrixFontSize);
+        for (let i = 0; i < columns; i++) matrixDrops[i] = Math.random() * -100;
       }
       
-      neuralCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
+      matrixCtx.fillStyle = 'rgba(0, 10, 0, 0.05)';
+      matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
       
-      // Process updates first
-      neurons.forEach(n => n.update());
+      matrixCtx.fillStyle = isHackMode ? '#0f0' : 'rgba(0, 255, 0, 0.5)';
+      matrixCtx.font = matrixFontSize + 'px monospace';
       
-      // Then process draws
-      neurons.forEach(n => n.draw());
+      for (let i = 0; i < matrixDrops.length; i++) {
+        const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+        matrixCtx.fillText(text, i * matrixFontSize, matrixDrops[i] * matrixFontSize);
+        
+        if (matrixDrops[i] * matrixFontSize > matrixCanvas.height && Math.random() > 0.975) {
+          matrixDrops[i] = 0;
+        }
+        matrixDrops[i]++;
+      }
       
-      connectNeurons();
+      // --- NEURAL NETWORK ANIMATION ---
+      if (!isHackMode) {
+        // Clear canvas to prevent trails from smearing
+        neuralCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
+        
+        neurons.forEach(n => n.update());
+        neurons.forEach(n => n.draw());
+        connectNeurons();
+      }
     }
-    requestAnimationFrame(animateNeural);
+    requestAnimationFrame(animateBackgrounds);
 
       let mX = 0, mY = 0;
       let lastMouseUpdate = 0;
@@ -966,10 +1030,7 @@
     // =============================================
     // RESIZE HANDLING
     // =============================================
-    window.addEventListener('resize', () => {
-      neuralCanvas.width = window.innerWidth;
-      neuralCanvas.height = window.innerHeight;
-    });
+    window.addEventListener('resize', resizeCanvases);
 
     // =============================================
     // GSAP ANIMATIONS
@@ -1100,19 +1161,35 @@ Twitter: @ahmedrebel16`
             }
           });
         } else if (cmd === 'hack') {
-          isHackMode = !isHackMode;
-          if (isHackMode) {
-            document.body.classList.add('hack-mode');
-            appendTerminalOutput("=======================", false);
-            appendTerminalOutput("SYSTEM SECURITY COMPROMISED", false);
-            appendTerminalOutput("ACCESS GRANTED: ROOT OVERRIDE", false);
-            appendTerminalOutput("PROTOCOL: MATRIX ACTIVE", false);
-            appendTerminalOutput("=======================", false);
-            matrixDrops.length = 0;
-          } else {
-            document.body.classList.remove('hack-mode');
-            appendTerminalOutput("Security restored. Default UI re-engaged.", false);
-          }
+          // Start transition animation
+          document.body.classList.add('hack-transitioning');
+          
+          // Delay mode toggle to match the peak of the glitch animation
+          setTimeout(() => {
+            isHackMode = !isHackMode;
+            if (isHackMode) {
+              document.body.classList.add('hack-mode');
+              appendTerminalOutput("=======================", false);
+              appendTerminalOutput("SYSTEM SECURITY COMPROMISED", false);
+              appendTerminalOutput("ACCESS GRANTED: ROOT OVERRIDE", false);
+              appendTerminalOutput("PROTOCOL: MATRIX ACTIVE", false);
+              appendTerminalOutput("=======================", false);
+              matrixDrops.length = 0; // restart drops
+            } else {
+              document.body.classList.remove('hack-mode');
+              appendTerminalOutput("Security restored. Default UI re-engaged.", false);
+            }
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+          }, 400);
+
+          // Remove transition class after animation finishes
+          setTimeout(() => {
+            document.body.classList.remove('hack-transitioning');
+          }, 800);
+          
+          // Prevent standard scroll to bottom since it happens in timeout
+          this.value = '';
+          return;
         } else if (commands[cmd]) {
           appendTerminalOutput(commands[cmd], true);
         } else if (cmd === 'cd projects') {

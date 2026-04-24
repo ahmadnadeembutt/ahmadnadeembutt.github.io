@@ -1,0 +1,2250 @@
+﻿commit 72b01dce0f05ed34c7c30fb9832cb919e3ecde9a
+Author: Arshad Mehmood <arshadmalikdeon@gmail.com>
+Date:   Fri Mar 13 23:07:04 2026 +0500
+
+    meow
+
+diff --git a/index.html b/index.html
+index 1bd36ab..52d8cf8 100644
+--- a/index.html
++++ b/index.html
+@@ -4,17 +4,35 @@
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Ahmad Nadeem Butt | Portfolio</title>
+-  <link rel="icon" type="image/png" href="favicon.png">
+-  <link rel="shortcut icon" type="image/png" href="favicon.png">
+-  <link rel="apple-touch-icon" href="favicon.png">
++  <link rel="icon" type="image/x-icon" href="favicon.ico">
++  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+   <script src="https://cdn.tailwindcss.com"></script>
+   <script src="https://unpkg.com/feather-icons"></script>
+   <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+ 
+   <style>
+-    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
++    @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+     
++    :root {
++      --color-primary: #2563EB;
++      --color-secondary: #3B82F6;
++      --color-cta: #22C55E;
++      --color-background: #F8FAFC;
++      --color-text: #1E293B;
++      
++      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
++      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
++      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
++      --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
++      
++      --terminal-bg: rgba(5, 5, 5, 0.85);
++      --terminal-border: rgba(255, 255, 255, 0.1);
++      --terminal-text: #00ff00;
++    }
++
++    html { scroll-behavior: smooth; }
++
+     * {
+       margin: 0;
+       padding: 0;
+@@ -22,48 +40,18 @@
+     }
+     
+     body {
+-      font-family: "Inter", sans-serif;
++      font-family: 'Space Grotesk', sans-serif;
+       overflow-x: hidden;
+-      background: linear-gradient(135deg, #0a0e27 0%, #050a15 50%, #0d1b2a 100%);
+-      color: white;
++      background: #050a15;
++      color: #F8FAFC;
+       position: relative;
+     }
+-    
+-    /* Layered Canvas Backgrounds */
+-    #neural-canvas, #particle-canvas, #grid-canvas, #matrix-canvas {
+-      position: fixed;
+-      top: 0;
+-      left: 0;
+-      width: 100%;
+-      height: 100%;
+-      pointer-events: none;
+-    }
+-    
+-    #neural-canvas {
+-      z-index: 1;
+-      opacity: 0.6;
+-    }
+-    
+-    #particle-canvas {
+-      z-index: 2;
+-      opacity: 0.4;
+-    }
+-    
+-    #grid-canvas {
+-      z-index: 0;
+-      opacity: 0.3;
+-    }
+-    
+-    #matrix-canvas {
+-      z-index: 3;
+-      opacity: 0.15;
+-    }
+-    
+-    .content-wrapper {
+-      position: relative;
+-      z-index: 10;
++
++    /* Custom Cursor (restored from original) */
++    @media (hover: hover) and (pointer: fine) {
++      body { cursor: none; }
++      a, button, input, textarea, .project-card { cursor: none; }
+     }
+-    
+     .custom-cursor {
+       position: fixed;
+       width: 20px;
+@@ -72,26 +60,152 @@
+       border-radius: 50%;
+       pointer-events: none;
+       z-index: 9999;
+-      transform: translate(-50%, -50%);
+-      transition: all 0.15s ease-out;
++      top: 0; left: 0;
++      margin-top: -10px;
++      margin-left: -10px;
++      transition: width 0.2s ease-out, height 0.2s ease-out, border-color 0.2s ease-out, margin 0.2s ease-out;
+       box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
++      will-change: transform;
++      display: none;
+     }
+-    
+     .custom-cursor-outer {
+       position: fixed;
+       width: 40px;
+       height: 40px;
+-      border: 1px solid rgba(138, 43, 226, 0.3);
++      border: 1px solid rgba(138, 43, 226, 0.4);
+       border-radius: 50%;
+       pointer-events: none;
+       z-index: 9998;
+-      transform: translate(-50%, -50%);
+-      transition: all 0.2s ease-out;
++      top: 0; left: 0;
++      margin-top: -20px;
++      margin-left: -20px;
++      transition: width 0.25s ease-out, height 0.25s ease-out, margin 0.25s ease-out, border-color 0.25s ease-out;
++      will-change: transform;
++      display: none;
++    }
++    .custom-cursor.active {
++      width: 40px; height: 40px;
++      margin-top: -20px; margin-left: -20px;
++      border-color: rgba(34, 197, 94, 0.9);
++      box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
++    }
++    .custom-cursor-outer.active {
++      width: 60px; height: 60px;
++      margin-top: -30px; margin-left: -30px;
++      border-color: rgba(34, 197, 94, 0.25);
++    }
++    @media (hover: hover) and (pointer: fine) {
++      .custom-cursor, .custom-cursor-outer { display: block; }
++    }
++
++    /* Gradient Text */
++    .gradient-name {
++      background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #06B6D4 100%);
++      -webkit-background-clip: text;
++      -webkit-text-fill-color: transparent;
++      background-clip: text;
++    }
++
++    /* Nav scroll effect */
++    nav { transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease; border-bottom: 1px solid transparent; }
++    nav.scrolled { background: rgba(5, 10, 21, 0.85) !important; backdrop-filter: blur(16px); border-bottom-color: rgba(255,255,255,0.06); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
++
++    /* Scroll Reveal */
++    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1); }
++    .reveal.visible { opacity: 1; transform: translateY(0); }
++    .reveal-delay-1 { transition-delay: 0.1s; }
++    .reveal-delay-2 { transition-delay: 0.2s; }
++    .reveal-delay-3 { transition-delay: 0.3s; }
++    .reveal-delay-4 { transition-delay: 0.4s; }
++
++    /* Animated skill bars */
++    .skill-fill { width: 0; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
++    .skill-fill.animate { width: var(--fill-width); }
++
++    /* Mobile menu animation */
++    .mobile-menu { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease; opacity: 0; }
++    .mobile-menu.open { max-height: 400px; opacity: 1; }
++
++    /* Back to top */
++    .back-to-top { position: fixed; bottom: 32px; right: 32px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: rgba(37,99,235,0.9); color: #fff; border: none; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; transform: translateY(10px); cursor: pointer; box-shadow: 0 4px 20px rgba(37,99,235,0.4); }
++    .back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
++    .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(37,99,235,0.6); }
++
++    /* Footer gradient */
++    .footer-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.3), rgba(139,92,246,0.3), transparent); margin-bottom: 2rem; }
++
++    /* Profile image animated rainbow border */
++    @keyframes rainbow-spin {
++      0% { --rainbow-angle: 0deg; }
++      100% { --rainbow-angle: 360deg; }
++    }
++    @property --rainbow-angle {
++      syntax: '<angle>';
++      initial-value: 0deg;
++      inherits: false;
++    }
++    .profile-glow {
++      padding: 4px;
++      border-radius: 1rem;
++      background: conic-gradient(from var(--rainbow-angle), #FF0018, #FFA52C, #FFFF41, #008018, #0000F9, #86007D, #FF0018);
++      animation: rainbow-spin 3s linear infinite;
++      box-shadow: 0 0 20px rgba(255, 0, 24, 0.2), 0 0 40px rgba(0, 0, 249, 0.15);
++    }
++    .profile-glow img {
++      border-radius: calc(1rem - 4px);
++      display: block;
++      width: 100%;
++      height: 100%;
++      object-fit: cover;
++      background: #050a15;
++    }
++    @media (prefers-reduced-motion: reduce) {
++      .profile-glow { animation: none; }
++    }
++    .project-card::before { content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, transparent, transparent); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.4s ease; z-index: 1; pointer-events: none; }
++    .project-card:hover::before { background: linear-gradient(135deg, rgba(59,130,246,0.5), rgba(139,92,246,0.4), rgba(6,182,212,0.3)); opacity: 1; }
++
++    /* Project overlay slide-up */
++    .project-overlay { transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; }
++    .project-card:hover .project-overlay, .project-card:focus-within .project-overlay { transform: translateY(0); }
++
++    h1, h2, h3, h4, h5, h6, .font-heading {
++      font-family: 'Archivo', sans-serif;
++    }
++    
++    /* Unified Canvas Background */
++    #neural-canvas {
++      position: fixed;
++      top: 0;
++      left: 0;
++      width: 100%;
++      height: 100%;
++      pointer-events: none;
++      z-index: 1;
++      opacity: 0.8;
++    }
++    
++    @media (prefers-reduced-motion: reduce) {
++      #neural-canvas { display: none; }
++      .float-animation { animation: none; }
++      .btn-glow { transition: none; }
++      .reveal { opacity: 1; transform: none; transition: none; }
++      .skill-fill { transition: none; }
++      .custom-cursor, .custom-cursor-outer { display: none !important; }
++      body { cursor: auto !important; }
+     }
+     
++    .content-wrapper {
++      position: relative;
++      z-index: 10;
++    }
++    
++
++    
+     .menu-item {
+       position: relative;
+       transition: color 0.3s ease;
++      cursor: pointer;
+     }
+     
+     .menu-item::after {
+@@ -101,18 +215,19 @@
+       height: 2px;
+       bottom: -4px;
+       left: 0;
+-      background: linear-gradient(90deg, #00ffff, #8a2be2);
++      background: linear-gradient(90deg, var(--color-secondary), #8a2be2);
+       transition: width 0.3s ease;
+-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
++      box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+     }
+     
+-    .menu-item:hover::after {
++    .menu-item:hover::after, .menu-item:focus-visible::after {
+       width: 100%;
+     }
+     
+-    .menu-item:hover {
+-      color: #00ffff;
+-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
++    .menu-item:hover, .menu-item:focus-visible {
++      color: var(--color-secondary);
++      text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
++      outline: none;
+     }
+     
+     .typing-text::after {
+@@ -127,31 +242,35 @@
+     }
+     
+     .glow-text {
+-      text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
++      text-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+     }
+     
+     .project-card {
+-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+-      border: 1px solid rgba(138, 43, 226, 0.3);
++      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
++      border: 1px solid rgba(255, 255, 255, 0.05); /* Softer border */
++      cursor: pointer;
++      background: rgba(15, 20, 30, 0.4);
++      backdrop-filter: blur(10px); /* Subtler glassmorphism */
+     }
+     
+-    .project-card:hover {
+-      transform: translateY(-10px);
+-      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
+-      border-color: rgba(0, 255, 255, 0.6);
++    .project-card:hover, .project-card:focus-within {
++      transform: translateY(-4px); /* Smoother interaction */
++      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
++      border-color: rgba(59, 130, 246, 0.3);
+     }
+     
+-    .project-card:hover .project-overlay {
++    .project-card:hover .project-overlay, .project-card:focus-within .project-overlay {
+       opacity: 1;
+     }
+     
+     .btn-glow {
+-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+-      transition: all 0.3s ease;
++      box-shadow: 0 4px 14px 0 rgba(34, 197, 94, 0.39);
++      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
++      cursor: pointer;
+     }
+     
+     .btn-glow:hover {
+-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
++      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.23);
+       transform: translateY(-2px);
+     }
+     
+@@ -160,8 +279,99 @@
+     }
+     
+     input:focus, textarea:focus {
+-      border-color: #00ffff !important;
+-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3) !important;
++      border-color: var(--color-primary) !important;
++      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3) !important;
++      outline: none;
++    }
++    
++    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, .project-card:focus-visible {
++      outline: 2px solid var(--color-primary);
++      outline-offset: 4px;
++      border-radius: 4px;
++    }
++    
++    .terminal-container {
++      background: var(--terminal-bg);
++      border: 1px solid var(--terminal-border);
++      border-radius: 12px;
++      box-shadow: var(--shadow-xl), 0 0 20px rgba(0, 255, 0, 0.05);
++      backdrop-filter: blur(16px);
++      overflow: hidden;
++      display: flex;
++      flex-direction: column;
++      height: 400px;
++      font-family: 'Space Grotesk', monospace;
++      max-width: 100%;
++    }
++    
++    .terminal-header {
++      background: rgba(255, 255, 255, 0.05);
++      padding: 12px 16px;
++      display: flex;
++      align-items: center;
++      border-bottom: 1px solid var(--terminal-border);
++    }
++    
++    .terminal-dots {
++      display: flex;
++      gap: 8px;
++    }
++    
++    .terminal-dot {
++      width: 12px;
++      height: 12px;
++      border-radius: 50%;
++    }
++    .dot-red { background-color: #ff5f56; }
++    .dot-yellow { background-color: #ffbd2e; }
++    .dot-green { background-color: #27c93f; }
++    
++    .terminal-title {
++      flex: 1;
++      text-align: center;
++      color: rgba(255, 255, 255, 0.5);
++      font-size: 14px;
++      font-weight: 500;
++      margin-right: 44px; /* offset for dots to keep centered */
++    }
++    
++    .terminal-body {
++      padding: 16px;
++      flex: 1;
++      overflow-y: auto;
++      color: var(--terminal-text);
++      font-size: 15px;
++      line-height: 1.6;
++      display: flex;
++      flex-direction: column;
++    }
++    
++    .terminal-output {
++      word-wrap: break-word;
++      white-space: pre-wrap;
++    }
++    
++    .terminal-input-line {
++      display: flex;
++      margin-top: 8px;
++    }
++    
++    .terminal-prompt {
++      color: #3B82F6;
++      margin-right: 8px;
++      font-weight: bold;
++    }
++    
++    .terminal-input {
++      background: transparent;
++      border: none;
++      color: var(--terminal-text);
++      flex: 1;
++      font-family: 'Space Grotesk', monospace;
++      font-size: 15px;
++      outline: none !important;
++      box-shadow: none !important;
++      padding: 0;
+     }
+     
+     @keyframes float {
+@@ -176,34 +386,80 @@
+       0% { transform: rotate(0deg); }
+       100% { transform: rotate(360deg); }
+     }
++    
++    /* Hack Mode Styles */
++    body.hack-mode {
++      background: #000;
++      color: #0f0 !important;
++      font-family: monospace !important;
++    }
++    body.hack-mode h1, body.hack-mode h2, body.hack-mode h3, 
++    body.hack-mode h4, body.hack-mode p, body.hack-mode span,
++    body.hack-mode a, body.hack-mode div, body.hack-mode .project-overlay h3,
++    body.hack-mode .project-overlay p, body.hack-mode .menu-item {
++      font-family: monospace !important;
++      color: #0f0 !important;
++      border-color: #0f0 !important;
++      text-shadow: none !important;
++      box-shadow: none !important;
++    }
++    body.hack-mode nav {
++      background: rgba(0, 0, 0, 0.9) !important;
++      border-bottom: 1px solid #0f0 !important;
++      backdrop-filter: none !important;
++    }
++    body.hack-mode .project-card, body.hack-mode .terminal-container,
++    body.hack-mode input, body.hack-mode textarea, body.hack-mode div[class*="bg-[rgba"] {
++      background: rgba(0, 20, 0, 0.9) !important;
++      border: 1px solid #0f0 !important;
++      border-radius: 0 !important;
++      backdrop-filter: none !important;
++    }
++    body.hack-mode .btn-glow {
++      background: transparent !important;
++      color: #0f0 !important;
++      border: 1px solid #0f0 !important;
++    }
++    body.hack-mode img {
++      filter: grayscale(100%) sepia(100%) hue-rotate(80deg) brightness(0.8) contrast(150%) !important;
++    }
++    body.hack-mode .terminal-header {
++      border-bottom: 1px solid #0f0 !important;
++      background: #000 !important;
++    }
++    body.hack-mode .float-animation {
++      animation: none !important;
++    }
+   </style>
+ </head>
+ <body>
+-  <!-- Multi-layered Canvas Backgrounds -->
+-  <canvas id="grid-canvas"></canvas>
++  <!-- Unified Background Canvas -->
+   <canvas id="neural-canvas"></canvas>
+-  <canvas id="particle-canvas"></canvas>
+-  <canvas id="matrix-canvas"></canvas>
+-  
++
+   <!-- Custom Cursor -->
+   <div class="custom-cursor"></div>
+   <div class="custom-cursor-outer"></div>
+ 
++  <!-- Back to Top -->
++  <button class="back-to-top" id="backToTop" aria-label="Back to top">
++    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
++  </button>
++
+   <div class="content-wrapper">
+     <nav class="fixed w-full px-8 py-6 z-50 flex justify-between items-center backdrop-blur-sm bg-black bg-opacity-20">
+       <div class="text-2xl font-bold tracking-tighter glow-text">
+         AHMAD<span class="text-blue-400">.</span>
+       </div>
+       <div class="hidden md:flex space-x-8">
+-        <a href="#" class="menu-item">Home</a>
+-        <a href="#projects" class="menu-item">Projects</a>
+-        <a href="#about" class="menu-item">About</a>
+-        <a href="#contact" class="menu-item">Contact</a>
++        <a href="#" class="menu-item text-gray-300 hover:text-white">Home</a>
++        <a href="#projects" class="menu-item text-gray-300 hover:text-white">Projects</a>
++        <a href="#about" class="menu-item text-gray-300 hover:text-white">About</a>
++        <a href="#contact" class="menu-item text-gray-300 hover:text-white">Contact</a>
+       </div>
+-      <button class="md:hidden mobile-menu-btn" onclick="toggleMobileMenu()">
++      <button class="md:hidden mobile-menu-btn p-3 active:scale-95 transition-transform" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" aria-expanded="false">
+         <i data-feather="menu"></i>
+       </button>
+-      <div class="mobile-menu hidden md:hidden absolute top-full left-0 w-full bg-black bg-opacity-95 backdrop-blur-sm">
++      <div class="mobile-menu md:hidden absolute top-full left-0 w-full bg-black bg-opacity-95 backdrop-blur-sm">
+         <div class="flex flex-col space-y-4 p-6">
+           <a href="#" class="menu-item text-center py-2">Home</a>
+           <a href="#projects" class="menu-item text-center py-2">Projects</a>
+@@ -214,61 +470,93 @@
+     </nav>
+ 
+     <main class="container mx-auto px-4 pt-32 pb-20">
+-      <section class="min-h-screen flex flex-col justify-center">
+-        <h1 class="text-4xl sm:text-5xl md:text-8xl font-bold mb-6 float-animation">
+-          Hello, I'm <span class="text-blue-400 glow-text">AHMAD</span>
+-        </h1>
+-        <div class="text-xl md:text-2xl mb-12">
+-          <span class="typing-text">AI Developer & ML Engineer</span>
++      <section class="min-h-screen flex items-center pt-20">
++        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
++          <!-- Text Content -->
++          <div class="hero-text text-left">
++            <div class="inline-block px-4 py-1.5 mb-6 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm">
++              <span class="text-blue-400 text-sm font-medium tracking-wider uppercase">AI &amp; Machine Learning</span>
++            </div>
++            <h1 class="font-heading text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight float-animation">
++              Hello, I'm <span class="gradient-name">AHMAD</span>
++            </h1>
++            <div class="text-xl md:text-2xl mb-10 text-gray-400">
++              <span class="typing-text text-gray-200">AI Developer & ML Engineer</span>
++            </div>
++            <div class="flex flex-col sm:flex-row gap-4">
++              <a href="#projects" class="px-8 py-3 bg-[#22C55E] text-white rounded-lg font-medium hover:opacity-90 transition btn-glow shadow-lg text-center min-h-[44px] flex items-center justify-center">
++                View Projects
++              </a>
++              <a href="#contact" class="px-8 py-3 bg-transparent text-blue-500 border-2 border-blue-500 rounded-lg font-medium hover:bg-blue-500/10 transition text-center min-h-[44px] flex items-center justify-center">
++                Contact Me
++              </a>
++              <a href="assets/docs/Resume.pdf" target="_blank" class="px-8 py-3 bg-gray-800 text-white border border-gray-700 rounded-lg font-medium hover:bg-gray-700 transition text-center min-h-[44px] flex items-center justify-center">
++                View Resume
++              </a>
++            </div>
++          </div>
++          
++          <!-- Terminal Component -->
++          <div class="hero-terminal perspective-1000 w-full" data-aos="fade-left">
++            <div class="terminal-container" id="terminal" onclick="document.getElementById('terminal-input').focus()">
++              <div class="terminal-header">
++                <div class="terminal-dots">
++                  <div class="terminal-dot dot-red"></div>
++                  <div class="terminal-dot dot-yellow"></div>
++                  <div class="terminal-dot dot-green"></div>
++                </div>
++                <div class="terminal-title">ahmad@portfolio ~ bash</div>
++              </div>
++              <div class="terminal-body" id="terminal-body">
++                <div class="terminal-output">
++                  <span class="text-gray-400">Welcome to Ahmad's Interactive Shell.</span><br/>
++                  <span class="text-gray-400">Type 'help' to see available commands.</span>
++                </div>
++                <div class="terminal-input-line">
++                  <span class="terminal-prompt">ahmad@portfolio:~$</span>
++                  <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" autofocus />
++                </div>
++              </div>
++            </div>
++          </div>
+         </div>
+-        <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+-          <a href="#projects" class="px-8 py-3 border border-blue-400 rounded-full font-medium hover:bg-blue-400 hover:text-black transition btn-glow text-center">
+-            View Projects
+-          </a>
+-          <a href="#contact" class="px-8 py-3 border border-cyan-400 rounded-full font-medium hover:bg-cyan-400 hover:text-black transition btn-glow text-center">
+-            Contact Me
+-          </a>
+-          <a href="assets/docs/Resume.pdf" target="_blank" class="px-8 py-3 border border-purple-400 rounded-full font-medium hover:bg-purple-400 hover:text-white transition btn-glow text-center">
+-            View Resume
+-          </a>
+-</div>
+       </section>
+ 
+       <section id="projects" class="py-20">
+-        <h2 class="text-3xl md:text-5xl font-bold mb-16">
+-          Selected <span class="text-purple-400 glow-text">Projects</span>
++        <h2 class="text-3xl md:text-5xl font-bold mb-16 text-gray-100 reveal">
++          Selected <span class="text-blue-500">Projects</span>
+         </h2>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+-          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
+-            <img src="assets/images/projects/neural.png" alt="Neural Network Visualizer" class="w-full h-full object-cover">
+-            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
+-              <h3 class="text-2xl font-bold mb-2 glow-text">Neural Network Visualizer</h3>
+-              <p class="text-center mb-4 text-gray-300">AI-based WebGL visualization of deep learning models.</p>
+-              <a href="assets/docs/projects/neural-network-visualizer.html" target="_blank" class="px-6 py-2 bg-blue-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
++          <div class="project-card reveal reveal-delay-1 relative overflow-hidden rounded-xl aspect-video bg-gray-900 border border-gray-800 focus-within:ring-2 focus-within:ring-blue-500">
++            <img src="assets/images/projects/neural.png" alt="Neural Network Visualizer screenshot showing a 3D visualization of deep learning nodes" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
++            <div class="project-overlay absolute inset-0 bg-gray-900 bg-opacity-95 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
++              <h3 class="text-2xl font-bold mb-2 text-white">Neural Network Visualizer</h3>
++              <p class="text-center mb-6 text-gray-300 font-medium">AI-based WebGL visualization of deep learning models.</p>
++              <a href="assets/docs/projects/neural-network-visualizer.html" target="_blank" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2">View Case Study</a>
+             </div>
+           </div>
+-          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
+-            <img src="assets/images/projects/cdps2.png" alt="Crime Detection and Prevention System (CDPS)" class="w-full h-full object-cover">
+-            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
+-              <h3 class="text-2xl font-bold mb-2 glow-text">CDPS</h3>
+-              <p class="text-center mb-4 text-gray-300">Real-time AI that detects threats and helps prevent crime using vision, NLP, and risk scoring</p>
+-              <a href="assets/docs/projects/cdps.html" target="_blank" class="px-6 py-2 bg-purple-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
++          <div class="project-card reveal reveal-delay-2 relative overflow-hidden rounded-xl aspect-video bg-gray-900 border border-gray-800 focus-within:ring-2 focus-within:ring-blue-500">
++            <img src="assets/images/projects/cdps2.png" alt="Crime Detection and Prevention System dashboard showing threat analysis" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
++            <div class="project-overlay absolute inset-0 bg-gray-900 bg-opacity-95 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
++              <h3 class="text-2xl font-bold mb-2 text-white">CDPS</h3>
++              <p class="text-center mb-6 text-gray-300 font-medium">Real-time AI that detects threats and helps prevent crime using vision, NLP, and risk scoring</p>
++              <a href="assets/docs/projects/cdps.html" target="_blank" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2">View Case Study</a>
+             </div>
+           </div>
+-          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
+-            <img src="assets/images/projects/garpus.png" alt="Garpus AI - Business Forecast System" class="w-full h-full object-cover">
+-            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
+-              <h3 class="text-2xl font-bold mb-2 glow-text">Garpus AI</h3>
+-              <p class="text-center mb-4 text-gray-300">AI-based forecasts and marketing insights for small businesses.</p>
+-              <a href="assets/docs/projects/garpus-ai.html" target="_blank" class="px-6 py-2 bg-green-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
++          <div class="project-card reveal reveal-delay-3 relative overflow-hidden rounded-xl aspect-video bg-gray-900 border border-gray-800 focus-within:ring-2 focus-within:ring-blue-500">
++            <img src="assets/images/projects/garpus.png" alt="Garpus AI Business Forecast System showing marketing insights and charts" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
++            <div class="project-overlay absolute inset-0 bg-gray-900 bg-opacity-95 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
++              <h3 class="text-2xl font-bold mb-2 text-white">Garpus AI</h3>
++              <p class="text-center mb-6 text-gray-300 font-medium">AI-based forecasts and marketing insights for small businesses.</p>
++              <a href="assets/docs/projects/garpus-ai.html" target="_blank" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2">View Case Study</a>
+             </div>
+           </div>
+-          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
+-            <img src="assets/images/projects/nlp.png" alt="Litigation Case Intelligence System" class="w-full h-full object-cover">
+-            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
+-              <h3 class="text-2xl font-bold mb-2 glow-text">Litigation Case Intelligence System</h3>
+-              <p class="text-center mb-4 text-gray-300">AI-powered platform for automated case classification and legal data extraction.</p>
+-              <a href="assets/docs/projects/litigation-case-intelligence.html" target="_blank" class="px-6 py-2 bg-purple-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
++          <div class="project-card reveal reveal-delay-4 relative overflow-hidden rounded-xl aspect-video bg-gray-900 border border-gray-800 focus-within:ring-2 focus-within:ring-blue-500">
++            <img src="assets/images/projects/nlp.png" alt="Litigation Case Intelligence System dashboard showing legal data extraction" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
++            <div class="project-overlay absolute inset-0 bg-gray-900 bg-opacity-95 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
++              <h3 class="text-2xl font-bold mb-2 text-white">Litigation Case Intelligence System</h3>
++              <p class="text-center mb-6 text-gray-300 font-medium">AI-powered platform for automated case classification and legal data extraction.</p>
++              <a href="assets/docs/projects/litigation-case-intelligence.html" target="_blank" class="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2">View Case Study</a>
+             </div>
+           </div>
+         </div>
+@@ -277,94 +565,98 @@
+       <section id="about" class="py-20">
+         <div class="flex flex-col md:flex-row gap-12 items-center">
+           <div class="md:w-full flex flex-col md:flex-row gap-8">
+-                <div class="relative w-64 h-64 mx-auto md:mx-0">
+-              <div class="absolute inset-0 rounded-full border-4 border-cyan-400/50 bg-gradient-to-br from-blue-500/20 to-purple-500/20 overflow-hidden">
+-                <img src="assets/images/profile.jpg?v=2" alt="Profile Photo" class="w-full h-full object-cover">
++            <div class="w-64 h-64 mx-auto md:mx-0 shrink-0">
++              <div class="profile-glow w-full h-full shadow-2xl">
++                <img src="assets/images/profile.jpg?v=2" alt="Ahmad Nadeem Butt Profile Photo">  
+               </div>
+-              <div class="absolute -inset-2 rounded-full border-2 border-purple-400/30 animate-spin-slow" style="animation-duration: 10s;"></div>
+             </div>
+-<div class="space-y-12">
+-              <div class="bg-gray-900 bg-opacity-50 backdrop-blur-sm border border-purple-500/30 rounded-xl p-8 flex-1">
+-              <h2 class="text-3xl md:text-5xl font-bold mb-8">About <span class="text-cyan-400 glow-text">Me</span></h2>
+-<p class="text-lg mb-6 text-gray-200">
+-                An AI Engineer who turns data into intelligence and ideas into automation.
+-I specialize in machine learning, computer vision, and NLP, crafting smart systems that see, think, and respond.
+-              </p>
+-              <p class="text-lg mb-6 text-gray-200">
+-                From building deep learning models for market prediction to facial emotion recognition and AI-powered dashboards, I've brought real-world ideas to life for global clients.
+-              <p class="text-lg mb-6 text-gray-200">
+-              I love working where creativity meets code, exploring how data and design can create powerful digital experiences.
+-Always learning. Always building. Always pushing AI beyond the ordinary.
+-              </p>
+-              <div class="grid grid-cols-2 gap-4 mb-8">
+-                <div class="flex items-center"><i data-feather="cpu" class="mr-2 text-blue-400"></i><span>AI/ML Systems</span></div>
+-                <div class="flex items-center"><i data-feather="database" class="mr-2 text-blue-400"></i><span>Data Handling & Deployment</span></div>
+-                <div class="flex items-center"><i data-feather="activity" class="mr-2 text-blue-400"></i><span>Data Visualization</span></div>
+-                <div class="flex items-center"><i data-feather="cpu" class="mr-2 text-blue-400"></i><span>Deep Learning</span></div>
+-              </div>
++            <div class="space-y-12 w-full">
++              <div class="bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] rounded-2xl p-8 flex-1 transition-shadow duration-300 hover:shadow-lg reveal">
++                <h2 class="text-3xl font-bold mb-6 text-gray-100">About <span class="text-blue-500">Me</span></h2>
++                <p class="text-lg mb-6 text-gray-300 leading-relaxed font-light">
++                  An AI Engineer who turns data into intelligence and ideas into automation.
++                  I specialize in machine learning, computer vision, and NLP, crafting smart systems that see, think, and respond.
++                </p>
++                <p class="text-lg mb-6 text-gray-300 leading-relaxed font-light">
++                  From building deep learning models for market prediction to facial emotion recognition and AI-powered dashboards, I've brought real-world ideas to life for global clients.
++                </p>
++                <p class="text-lg mb-8 text-gray-300 leading-relaxed font-light">
++                  I love working where creativity meets code, exploring how data and design can create powerful digital experiences.
++                  Always learning. Always building. Always pushing AI beyond the ordinary.
++                </p>
++                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
++                  <div class="flex items-center text-gray-300"><i data-feather="cpu" class="mr-3 text-blue-500" aria-hidden="true"></i><span>AI/ML Systems</span></div>
++                  <div class="flex items-center text-gray-300"><i data-feather="database" class="mr-3 text-blue-500" aria-hidden="true"></i><span>Data Handling & Deployment</span></div>
++                  <div class="flex items-center text-gray-300"><i data-feather="activity" class="mr-3 text-blue-500" aria-hidden="true"></i><span>Data Visualization</span></div>
++                  <div class="flex items-center text-gray-300"><i data-feather="monitor" class="mr-3 text-blue-500" aria-hidden="true"></i><span>Deep Learning</span></div>
++                </div>
+ 
+-              <h3 class="text-2xl font-bold mb-4 glow-text">Soft Skills</h3>
+-              <div class="space-y-4">
++              <h3 class="text-2xl font-bold mb-6 text-gray-100 mt-10">Soft Skills</h3>
++              <div class="space-y-5">
+                 <div>
+-                  <div class="flex justify-between mb-1">
+-                    <span class="text-gray-200">Analytical Thinking</span>
+-                    <span class="text-cyan-400">90%</span>
++                  <div class="flex justify-between mb-2">
++                    <span class="text-gray-300 font-medium">Analytical Thinking</span>
++                    <span class="text-blue-400 font-medium">90%</span>
+                   </div>
+-                  <div class="w-full bg-gray-900 rounded-full h-2">
+-                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 90%"></div>
++                  <div class="w-full bg-gray-800 rounded-full h-1.5">
++                    <div class="bg-blue-500 h-1.5 rounded-full skill-fill" style="--fill-width: 90%" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                   </div>
+                 </div>
+                 <div>
+-                  <div class="flex justify-between mb-1">
+-                    <span class="text-gray-200">Problem-solving</span>
+-                    <span class="text-cyan-400">85%</span>
++                  <div class="flex justify-between mb-2">
++                    <span class="text-gray-300 font-medium">Problem-solving</span>
++                    <span class="text-blue-400 font-medium">85%</span>
+                   </div>
+-                  <div class="w-full bg-gray-900 rounded-full h-2">
+-                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 85%"></div>
++                  <div class="w-full bg-gray-800 rounded-full h-1.5">
++                    <div class="bg-blue-500 h-1.5 rounded-full skill-fill" style="--fill-width: 85%" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                   </div>
+                 </div>
+                 <div>
+-                  <div class="flex justify-between mb-1">
+-                    <span class="text-gray-200">Communication</span>
+-                    <span class="text-cyan-400">80%</span>
++                  <div class="flex justify-between mb-2">
++                    <span class="text-gray-300 font-medium">Communication</span>
++                    <span class="text-blue-400 font-medium">80%</span>
+                   </div>
+-                  <div class="w-full bg-gray-900 rounded-full h-2">
+-                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 80%"></div>
++                  <div class="w-full bg-gray-800 rounded-full h-1.5">
++                    <div class="bg-blue-500 h-1.5 rounded-full skill-fill" style="--fill-width: 80%" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                   </div>
+                 </div>
+                 <div>
+-                  <div class="flex justify-between mb-1">
+-                    <span class="text-gray-200">Team Collaboration</span>
+-                    <span class="text-cyan-400">95%</span>
++                  <div class="flex justify-between mb-2">
++                    <span class="text-gray-300 font-medium">Team Collaboration</span>
++                    <span class="text-blue-400 font-medium">95%</span>
+                   </div>
+-                  <div class="w-full bg-gray-900 rounded-full h-2">
+-                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 95%"></div>
++                  <div class="w-full bg-gray-800 rounded-full h-1.5">
++                    <div class="bg-blue-500 h-1.5 rounded-full skill-fill" style="--fill-width: 95%" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+ 
+-            <div class="bg-gray-900 bg-opacity-50 backdrop-blur-sm border border-purple-500/30 rounded-xl p-8">
+-              <h3 class="text-3xl font-bold mb-6 glow-text">Education</h3>
+-              <div class="space-y-6">
+-                <div class="border-l-2 border-cyan-400 pl-6 py-2">
+-                  <h4 class="text-xl font-bold text-cyan-400">Bachelors Of Artificial Intelligence</h4>
+-                  <p class="text-gray-300">UMT | 11/2021 ΓÇô 07/2025 | Pakistan</p>
+-                  <p class="text-gray-400 mt-2">Specialized in Machine Learning, Neural Networks and AI applications development.</p>
++            <div class="bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] rounded-2xl p-8 transition-shadow duration-300 hover:shadow-lg reveal">
++              <h3 class="text-3xl font-bold mb-8 text-gray-100">Education</h3>
++              <div class="space-y-8">
++                <div class="relative pl-6 border-l-2 border-gray-700">
++                  <div class="absolute w-3 h-3 bg-blue-500 rounded-full -left-[7px] top-1.5"></div>
++                  <h4 class="text-xl font-semibold text-gray-100">Bachelors Of Artificial Intelligence</h4>
++                  <p class="text-blue-400 font-medium mt-1">UMT | 11/2021 ΓÇô 07/2025 | Pakistan</p>
++                  <p class="text-gray-400 mt-3 font-light leading-relaxed">Specialized in Machine Learning, Neural Networks and AI applications development.</p>
+                 </div>
+-                <div class="border-l-2 border-purple-400 pl-6 py-2">
+-                  <h4 class="text-xl font-bold text-purple-400">Intermediate in Computer Science</h4>
+-                  <p class="text-gray-300">Punjab Group of Colleges | 09/2019 ΓÇô 06/2021 | Pakistan</p>
+-                  <p class="text-gray-400 mt-2">Focus on fundamental programming, data structures and computer science principles.</p>
++                <div class="relative pl-6 border-l-2 border-gray-700">
++                  <div class="absolute w-3 h-3 bg-blue-500 rounded-full -left-[7px] top-1.5"></div>
++                  <h4 class="text-xl font-semibold text-gray-100">Intermediate in Computer Science</h4>
++                  <p class="text-blue-400 font-medium mt-1">Punjab Group of Colleges | 09/2019 ΓÇô 06/2021 | Pakistan</p>
++                  <p class="text-gray-400 mt-3 font-light leading-relaxed">Focus on fundamental programming, data structures and computer science principles.</p>
+                 </div>
+-                <div class="border-l-2 border-blue-400 pl-6 py-2">
+-                  <h4 class="text-xl font-bold text-blue-400">Matriculation in Science</h4>
+-                  <p class="text-gray-300">Sir Syed Pilot High School Wazirabad | 03/2017 ΓÇô 04/2019 | Pakistan</p>
+-                  <p class="text-gray-400 mt-2">Core science subjects including Mathematics, Physics and Computer Science.</p>
++                <div class="relative pl-6 border-l-2 border-gray-700">
++                  <div class="absolute w-3 h-3 bg-blue-500 rounded-full -left-[7px] top-1.5"></div>
++                  <h4 class="text-xl font-semibold text-gray-100">Matriculation in Science</h4>
++                  <p class="text-blue-400 font-medium mt-1">Sir Syed Pilot High School Wazirabad | 03/2017 ΓÇô 04/2019 | Pakistan</p>
++                  <p class="text-gray-400 mt-3 font-light leading-relaxed">Core science subjects including Mathematics, Physics and Computer Science.</p>
+                 </div>
+-                <div class="border-l-2 border-green-400 pl-6 py-2">
+-                  <h4 class="text-xl font-bold text-blue-400">Certifications</h4>
+-                  <ul class="list-disc list-inside text-gray-400 space-y-1 mt-2">
++                <div class="relative pl-6 border-l-2 border-gray-700">
++                  <div class="absolute w-3 h-3 bg-blue-500 rounded-full -left-[7px] top-1.5"></div>
++                  <h4 class="text-xl font-semibold text-gray-100">Certifications</h4>
++                  <ul class="list-disc list-outside ml-4 text-gray-400 space-y-2 mt-3 font-light">
+                     <li>Machine Learning - Stanford University (Coursera)</li>
+                     <li>Deep Learning Specialization - deeplearning.ai</li>
+                     <li>Python for Data Science and AI - IBM (Coursera)</li>
+@@ -379,26 +671,26 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
+       </section>
+ 
+       <section id="contact" class="py-20">
+-        <h2 class="text-3xl md:text-5xl font-bold mb-16">
+-          Let's <span class="text-purple-400 glow-text">Connect</span>
++        <h2 class="text-3xl md:text-5xl font-bold mb-16 font-heading reveal">
++          Let's <span class="text-[#22C55E] glow-text">Connect</span>
+         </h2>
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+           <div>
+-            <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
++            <h3 class="text-2xl font-bold mb-6 text-gray-100">Get in Touch</h3>
+             <form id="contactForm" class="space-y-6" action="https://formspree.io/f/movklznd" method="POST">
+               <div>
+-                <label for="name" class="block mb-2">Name</label>
+-                <input type="text" id="name" name="name" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
++                <label for="name" class="block mb-2 text-gray-200">Name</label>
++                <input type="text" id="name" name="name" required class="w-full bg-gray-900 bg-opacity-80 border border-gray-700 rounded-lg px-4 py-4 min-h-[44px] focus:outline-none text-gray-100 placeholder-gray-500" placeholder="John Doe" />
+               </div>
+               <div>
+-                <label for="email" class="block mb-2">Email</label>
+-                <input type="email" id="email" name="email" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
++                <label for="email" class="block mb-2 text-gray-200">Email</label>
++                <input type="email" id="email" name="email" required class="w-full bg-gray-900 bg-opacity-80 border border-gray-700 rounded-lg px-4 py-4 min-h-[44px] focus:outline-none text-gray-100 placeholder-gray-500" placeholder="john@example.com" />
+               </div>
+               <div>
+-                <label for="message" class="block mb-2">Message</label>
+-                <textarea id="message" name="message" rows="5" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400"></textarea>
++                <label for="message" class="block mb-2 text-gray-200">Message</label>
++                <textarea id="message" name="message" rows="5" required class="w-full bg-gray-900 bg-opacity-80 border border-gray-700 rounded-lg px-4 py-4 min-h-[44px] focus:outline-none text-gray-100 placeholder-gray-500" placeholder="How can I help you?"></textarea>
+               </div>
+-              <button type="submit" id="submitBtn" class="px-8 py-3 bg-cyan-400 text-black rounded-full font-medium hover:bg-cyan-500 transition btn-glow">
++              <button type="submit" id="submitBtn" class="bg-[#22C55E] text-white px-8 py-3 min-h-[44px] rounded-lg font-medium hover:opacity-90 transition btn-glow w-full sm:w-auto">
+                 <span id="btnText">Send Message</span>
+                 <span id="btnLoader" class="hidden">
+                   <span class="inline-block w-2 h-2 mx-0.5 bg-current rounded-full animate-pulse"></span>
+@@ -472,20 +764,20 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
+             <h3 class="text-2xl font-bold mb-6">Contact Info</h3>
+             <div class="space-y-4">
+               <div class="flex items-center">
+-                <i data-feather="mail" class="mr-4 text-cyan-400"></i><span class="text-gray-200">ahmedkillybp@gmail.com</span>
++                <i data-feather="mail" class="mr-4 text-blue-400"></i><span class="text-gray-200">ahmedkillybp@gmail.com</span>
+               </div>
+               <div class="flex items-center">
+-                <i data-feather="map-pin" class="mr-4 text-cyan-400"></i><span class="text-gray-200">Wazirabad, Pakistan</span>
++                <i data-feather="map-pin" class="mr-4 text-blue-400"></i><span class="text-gray-200">Wazirabad, Pakistan</span>
+               </div>
+             </div>
+             <div class="mt-12">
+-              <h3 class="text-2xl font-bold mb-6">Follow Me</h3>
+-              <div class="flex space-x-4">
+-                <a href="https://github.com/PolatAlemdarPLT34" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-cyan-400 hover:text-black transition btn-glow"><i data-feather="github"></i></a>
+-                <a href="https://x.com/ahmedrebel16?s=21" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="twitter"></i></a>
+-                <a href="https://www.linkedin.com/in/ahmad-nadeem-a75614288" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="linkedin"></i></a>
+-                <a href="https://www.instagram.com/a.h.m.e.d_nadeem" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="instagram"></i></a>
+-                <a href="https://www.fiverr.com/s/8zQzwGp" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-green-500 hover:text-white transition btn-glow">
++              <h3 class="text-2xl font-bold mb-6 text-gray-100">Follow Me</h3>
++              <div class="flex space-x-4 flex-wrap gap-y-4">
++                <a href="https://github.com/PolatAlemdarPLT34" aria-label="GitHub Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="github"></i></a>
++                <a href="https://x.com/ahmedrebel16?s=21" aria-label="Twitter Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="twitter"></i></a>
++                <a href="https://www.linkedin.com/in/ahmad-nadeem-a75614288" aria-label="LinkedIn Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="linkedin"></i></a>
++                <a href="https://www.instagram.com/a.h.m.e.d_nadeem" aria-label="Instagram Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="instagram"></i></a>
++                <a href="https://www.fiverr.com/s/8zQzwGp" aria-label="Fiverr Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300">
+                   <i data-feather="dollar-sign"></i>
+                 </a>
+               </div>
+@@ -495,19 +787,28 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
+       </section>
+     </main>
+ 
+-    <footer class="py-8 text-center text-gray-500">
+-      <p class="text-gray-300">┬⌐ 2025 Ahmad Nadeem Butt. All rights reserved.</p>
++    <footer class="py-12 text-center text-gray-500">
++      <div class="footer-divider max-w-2xl mx-auto"></div>
++      <p class="text-gray-400 text-sm">Designed &amp; Built by <span class="text-blue-400">Ahmad Nadeem Butt</span> <span class="text-gray-600">(Shaandar mobail waley)</span></p>
++      <p class="mt-2 text-xs" style="background: linear-gradient(90deg,#FF0018,#FFA52C,#FFFF41,#008018,#0000F9,#86007D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600; letter-spacing: 0.05em;">≡ƒÅ│∩╕ÅΓÇì≡ƒîê Proud LGBT Supporter ≡ƒÅ│∩╕ÅΓÇì≡ƒîê</p>
++      <p class="text-gray-600 text-xs mt-2">&copy; 2025 ΓÇö All rights reserved.</p>
+     </footer>
+   </div>
+ 
+   <script>
+-    // =============================================
+-    // MOBILE MENU TOGGLE
+-    // =============================================
+     function toggleMobileMenu() {
+       const mobileMenu = document.querySelector('.mobile-menu');
+-      mobileMenu.classList.toggle('hidden');
++      const btn = document.querySelector('.mobile-menu-btn');
++      mobileMenu.classList.toggle('open');
++      btn.setAttribute('aria-expanded', mobileMenu.classList.contains('open'));
+     }
++    // Close mobile menu on link click
++    document.querySelectorAll('.mobile-menu a').forEach(link => {
++      link.addEventListener('click', () => {
++        document.querySelector('.mobile-menu').classList.remove('open');
++        document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded', 'false');
++      });
++    });
+ 
+     // =============================================
+     // NEURAL NETWORK CANVAS - Connected Nodes
+@@ -521,6 +822,12 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
+     const neuronCount = 40;
+     const maxDistance = 120;
+     let mouseX = 0, mouseY = 0;
++    
++    // Hack Mode Globals
++    let isHackMode = false;
++    const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()<>{}[]/=-+~_';
++    const matrixDrops = [];
++    const matrixFontSize = 16;
+ 
+     class Neuron {
+       constructor() {
+@@ -596,6 +903,30 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
+       
+       lastTime = timestamp - (deltaTime % frameInterval);
+       
++      if (isHackMode) {
++        if (matrixDrops.length === 0) {
++          const columns = Math.floor(neuralCanvas.width / matrixFontSize);
++          for (let i = 0; i < columns; i++) matrixDrops[i] = Math.random() * -100;
++        }
++
++        neuralCtx.fillStyle = 'rgba(0, 0, 0, 0.1)';
++        neuralCtx.fillRect(0, 0, neuralCanvas.width, neuralCanvas.height);
++        
++        neuralCtx.fillStyle = '#0f0';
++        neuralCtx.font = matrixFontSize + 'px monospace';
++        
++        for (let i = 0; i < matrixDrops.length; i++) {
++          const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
++          neuralCtx.fillText(text, i * matrixFontSize, matrixDrops[i] * matrixFontSize);
++          
++          if (matrixDrops[i] * matrixFontSize > neuralCanvas.height && Math.random() > 0.975) {
++            matrixDrops[i] = 0;
++          }
++          matrixDrops[i]++;
++        }
++        return;
++      }
++      
+       neuralCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
+       
+       // Process updates first
+@@ -608,188 +939,30 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
+     }
+     requestAnimationFrame(animateNeural);
+ 
+-    // =============================================
+-    // PARTICLE FLOW CANVAS - Data Streams
+-    // =============================================
+-    const particleCanvas = document.getElementById('particle-canvas');
+-    const particleCtx = particleCanvas.getContext('2d');
+-    particleCanvas.width = window.innerWidth;
+-    particleCanvas.height = window.innerHeight;
+-
+-    const particles = [];
+-    const particleCount = 50;
+-
+-    class Particle {
+-      constructor() {
+-        this.reset();
+-      }
+-
+-      reset() {
+-        this.x = Math.random() * particleCanvas.width;
+-        this.y = Math.random() * particleCanvas.height;
+-        this.vx = (Math.random() - 0.5) * 2;
+-        this.vy = (Math.random() - 0.5) * 2;
+-        this.life = Math.random() * 100;
+-        this.maxLife = 100;
+-        this.color = Math.random() > 0.5 ? '0, 255, 255' : '138, 43, 226';
+-      }
+-
+-      update() {
+-        this.x += this.vx;
+-        this.y += this.vy;
+-        this.life--;
+-
+-        if (this.life <= 0 || this.x < 0 || this.x > particleCanvas.width || this.y < 0 || this.y > particleCanvas.height) {
+-          this.reset();
+-        }
+-      }
+-
+-      draw() {
+-        const opacity = this.life / this.maxLife;
+-        particleCtx.beginPath();
+-        particleCtx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+-        particleCtx.fillStyle = `rgba(${this.color}, ${opacity * 0.6})`;
+-        particleCtx.fill();
+-        
+-        particleCtx.beginPath();
+-        particleCtx.moveTo(this.x, this.y);
+-        particleCtx.lineTo(this.x - this.vx * 5, this.y - this.vy * 5);
+-        particleCtx.strokeStyle = `rgba(${this.color}, ${opacity * 0.3})`;
+-        particleCtx.lineWidth = 1;
+-        particleCtx.stroke();
+-      }
+-    }
+-
+-    for (let i = 0; i < particleCount; i++) {
+-      particles.push(new Particle());
+-    }
+-
+-    let particleLastTime = 0;
+-    
+-    function animateParticles(timestamp) {
+-      requestAnimationFrame(animateParticles);
+-      
+-      const deltaTime = timestamp - particleLastTime;
+-      if (deltaTime < frameInterval) return;
+-      
+-      particleLastTime = timestamp - (deltaTime % frameInterval);
+-      
+-      particleCtx.fillStyle = 'rgba(5, 10, 21, 0.05)';
+-      particleCtx.fillRect(0, 0, particleCanvas.width, particleCanvas.height);
+-      
+-      // Batch updates
+-      particles.forEach(p => p.update());
+-      
+-      // Batch draws
+-      particles.forEach(p => p.draw());
+-    }
+-    requestAnimationFrame(animateParticles);
+-
+-    // =============================================
+-    // GRID CANVAS - Animated Waves
+-    // =============================================
+-    const gridCanvas = document.getElementById('grid-canvas');
+-    const gridCtx = gridCanvas.getContext('2d');
+-    gridCanvas.width = window.innerWidth;
+-    gridCanvas.height = window.innerHeight;
+-
+-    let waveOffset = 0;
+-    let frameCount = 0;
+-
+-    let gridLastTime = 0;
+-    
+-    function drawGrid(timestamp) {
+-      requestAnimationFrame(drawGrid);
+-      
+-      const deltaTime = timestamp - gridLastTime;
+-      if (deltaTime < frameInterval * 2) return; // Slower update for grid
+-      
+-      gridLastTime = timestamp - (deltaTime % (frameInterval * 2));
+-      
+-      gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+-      gridCtx.strokeStyle = 'rgba(138, 43, 226, 0.08)';
+-      gridCtx.lineWidth = 1;
+-
+-      const gridSize = 80;
+-      waveOffset += 0.02;
+-
+-      // Optimize by caching calculations
+-      const cols = Math.ceil(gridCanvas.width / gridSize);
+-      const rows = Math.ceil(gridCanvas.height / gridSize);
+-      
+-      for (let i = 0; i < cols; i++) {
+-        const x = i * gridSize;
+-        for (let j = 0; j < rows; j++) {
+-          const y = j * gridSize;
+-          const wave = Math.sin(x * 0.01 + y * 0.01 + waveOffset) * 3;
+-          gridCtx.beginPath();
+-          gridCtx.moveTo(x, y + wave);
+-          gridCtx.lineTo(x + gridSize, y + wave);
+-          gridCtx.stroke();
+-        }
+-      }
+-    }
+-    requestAnimationFrame(drawGrid);
+-
+-    // =============================================
+-    // MATRIX CANVAS - Falling Code Effect
+-    // =============================================
+-    const matrixCanvas = document.getElementById('matrix-canvas');
+-    const matrixCtx = matrixCanvas.getContext('2d');
+-    matrixCanvas.width = window.innerWidth;
+-    matrixCanvas.height = window.innerHeight;
+-
+-    const chars = '01πéóπéñπéªπé¿πé¬πé½πé¡πé»πé▒πé│πé╡πé╖πé╣πé╗πé╜';
+-    const fontSize = 14;
+-    const columns = matrixCanvas.width / fontSize;
+-    const drops = Array(Math.floor(columns)).fill(1);
+-
+-    let matrixLastTime = 0;
+-    
+-    function drawMatrix(timestamp) {
+-      requestAnimationFrame(drawMatrix);
+-      
+-      const deltaTime = timestamp - matrixLastTime;
+-      if (deltaTime < 100) return; // Limit to ~10fps for matrix
+-    
+-      matrixLastTime = timestamp;
+-      
+-      matrixCtx.fillStyle = 'rgba(0, 10, 0, 0.05)';
+-      matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+-      
+-      matrixCtx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+-      matrixCtx.font = fontSize + 'px monospace';
++      let mX = 0, mY = 0;
++      let lastMouseUpdate = 0;
++      const cursor = document.querySelector('.custom-cursor');
++      const cursorOuter = document.querySelector('.custom-cursor-outer');
+ 
+-      // Batch updates and draws
+-      for (let i = 0; i < drops.length; i++) {
+-        if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
+-          drops[i] = 0;
+-        } else {
+-          const text = chars[Math.floor(Math.random() * chars.length)];
+-          matrixCtx.fillText(text, i * fontSize, drops[i] * fontSize);
+-          drops[i]++;
++      // Cursor updates on every mousemove event - no throttle
++      document.addEventListener('mousemove', (e) => {
++        // Move cursor immediately
++        if (cursor) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
++        if (cursorOuter) { cursorOuter.style.left = e.clientX + 'px'; cursorOuter.style.top = e.clientY + 'px'; }
++        // Throttle neural network repulsion to ~60fps
++        const now = performance.now();
++        if (now - lastMouseUpdate >= 16) {
++          lastMouseUpdate = now;
++          mouseX = e.clientX;
++          mouseY = e.clientY;
+         }
+-      }
+-    }
+-    requestAnimationFrame(drawMatrix);
++      });
+ 
+-    // =============================================
+-    // MOUSE TRACKING
+-    // =============================================
+-    let lastMouseUpdate = 0;
+-    document.addEventListener('mousemove', (e) => {
+-      const now = performance.now();
+-      if (now - lastMouseUpdate < 16) return; // ~60fps for mouse updates
+-      lastMouseUpdate = now;
+-      
+-      mouseX = e.clientX;
+-      mouseY = e.clientY;
+-      
+-      const cursor = document.querySelector('.custom-cursor');
+-      const cursorOuter = document.querySelector('.custom-cursor-outer');
+-      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+-      cursorOuter.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+-    });
++      // Cursor grow effect when hovering interactive elements
++      document.querySelectorAll('a, button, input, textarea, .project-card').forEach(el => {
++        el.addEventListener('mouseenter', () => { cursor?.classList.add('active'); cursorOuter?.classList.add('active'); });
++        el.addEventListener('mouseleave', () => { cursor?.classList.remove('active'); cursorOuter?.classList.remove('active'); });
++      });
+ 
+     // =============================================
+     // RESIZE HANDLING
+@@ -797,12 +970,6 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
+     window.addEventListener('resize', () => {
+       neuralCanvas.width = window.innerWidth;
+       neuralCanvas.height = window.innerHeight;
+-      particleCanvas.width = window.innerWidth;
+-      particleCanvas.height = window.innerHeight;
+-      gridCanvas.width = window.innerWidth;
+-      gridCanvas.height = window.innerHeight;
+-      matrixCanvas.width = window.innerWidth;
+-      matrixCanvas.height = window.innerHeight;
+     });
+ 
+     // =============================================
+@@ -841,12 +1008,197 @@ Always learning. Always building. Always pushing AI beyond the ordinary.
+       setTimeout(type, typeSpeed);
+     })();
+ 
+-    // Initialize feather icons
+-    feather.replace();
+-    // Add Fiverr icon
+-    feather.icons['dollar-sign'] = {
+-      contents: '<path d="M12 1L3 5v6l9 4 9-4V5l-9-4zM3 5l9 4 9-4M3 11l9 4 9-4M3 17l9 4 9-4"/>'
++    // =============================================
++    // TERMINAL LOGIC
++    // =============================================
++    const terminalInput = document.getElementById('terminal-input');
++    const terminalBody = document.getElementById('terminal-body');
++    
++    // Commands map
++    const commands = {
++      'help': `Available commands:
++  <span class="text-blue-400">help</span>     - Show this available commands list
++  <span class="text-blue-400">about</span>    - Display a brief intro about me
++  <span class="text-blue-400">skills</span>   - List my core technical skills
++  <span class="text-blue-400">projects</span> - List my selected projects
++  <span class="text-blue-400">contact</span>  - Show my contact details
++  <span class="text-blue-400">hack</span>     - Enter system override mode
++  <span class="text-blue-400">clear</span>    - Clear the terminal screen`,
++  
++      'about': `Hi, I'm Ahmad Nadeem Butt.
++I'm an AI Engineer specializing in machine learning, computer vision, and NLP.
++I turn data into intelligence and ideas into automation.`,
++      
++      'skills': `--- Core Tech Stack ---
++ΓÇó <span class="text-yellow-400">AI/ML:</span> Deep Learning, Neural Networks, NLP, Computer Vision
++ΓÇó <span class="text-blue-400">Language:</span> Python
++ΓÇó <span class="text-green-400">Systems:</span> Real-time AI, Dashboard Integration
++ΓÇó <span class="text-purple-400">Tools:</span> WebGL, REST APIs, Git`,
++      
++      'projects': `--- Selected Projects ---
++1. <span class="font-bold text-white">Neural Network Visualizer</span> - AI-based WebGL visualization
++2. <span class="font-bold text-white">CDPS</span> - Threat detection & crime prevention using AI
++3. <span class="font-bold text-white">Garpus AI</span> - Marketing forecasts for small businesses
++4. <span class="font-bold text-white">Litigation Case System</span> - Automated case classification
++
++[Type 'cd projects' to view them in the UI]`,
++
++      'contact': `Email: ahmedkillybp@gmail.com
++Location: Wazirabad, Pakistan
++GitHub: PolatAlemdarPLT34
++Twitter: @ahmedrebel16`
+     };
++
++    function appendTerminalOutput(content, isHTML = false) {
++      // Remove input line temporarily
++      const inputLine = document.querySelector('.terminal-input-line');
++      if (inputLine) {
++        terminalBody.removeChild(inputLine);
++      }
++      
++      // Add new output
++      const div = document.createElement('div');
++      div.className = 'mb-2 terminal-output';
++      if (isHTML) {
++        div.innerHTML = content;
++      } else {
++        div.textContent = content;
++      }
++      terminalBody.appendChild(div);
++      
++      // Re-add input line
++      if (inputLine) {
++        terminalBody.appendChild(inputLine);
++        // Reset and refocus input
++        const input = document.getElementById('terminal-input');
++        input.value = '';
++        input.focus();
++        
++        // Scroll to bottom
++        terminalBody.scrollTop = terminalBody.scrollHeight;
++      }
++    }
++
++    terminalInput.addEventListener('keydown', function(e) {
++      if (e.key === 'Enter') {
++        const cmd = this.value.trim().toLowerCase();
++        
++        // Echo command
++        const echoDiv = document.createElement('div');
++        echoDiv.innerHTML = `<span class="terminal-prompt">ahmad@portfolio:~$</span> ${this.value}`;
++        
++        // Insert echo before input line
++        const inputLine = document.querySelector('.terminal-input-line');
++        terminalBody.insertBefore(echoDiv, inputLine);
++        
++        if (cmd === '') {
++          // Do nothing
++        } else if (cmd === 'clear') {
++          // Clear terminal
++          Array.from(terminalBody.children).forEach(child => {
++            if (!child.classList.contains('terminal-input-line')) {
++              terminalBody.removeChild(child);
++            }
++          });
++        } else if (cmd === 'hack') {
++          isHackMode = !isHackMode;
++          if (isHackMode) {
++            document.body.classList.add('hack-mode');
++            appendTerminalOutput("=======================", false);
++            appendTerminalOutput("SYSTEM SECURITY COMPROMISED", false);
++            appendTerminalOutput("ACCESS GRANTED: ROOT OVERRIDE", false);
++            appendTerminalOutput("PROTOCOL: MATRIX ACTIVE", false);
++            appendTerminalOutput("=======================", false);
++            matrixDrops.length = 0;
++          } else {
++            document.body.classList.remove('hack-mode');
++            appendTerminalOutput("Security restored. Default UI re-engaged.", false);
++          }
++        } else if (commands[cmd]) {
++          appendTerminalOutput(commands[cmd], true);
++        } else if (cmd === 'cd projects') {
++          appendTerminalOutput("Redirecting to Projects section...", false);
++          setTimeout(() => {
++            window.location.hash = '#projects';
++            this.value = '';
++          }, 500);
++          return; // avoid normal input reset
++        } else {
++          appendTerminalOutput(`bash: ${cmd}: command not found`, false);
++        }
++        
++        this.value = '';
++        terminalBody.scrollTop = terminalBody.scrollHeight;
++      }
++    });
++
++    // Make sure click on terminal body focuses input
++    terminalBody.addEventListener('click', () => {
++      terminalInput.focus();
++    });
++
++    // =============================================
++    // NAV SCROLL EFFECT
++    // =============================================
++    const nav = document.querySelector('nav');
++    window.addEventListener('scroll', () => {
++      if (window.scrollY > 50) { nav.classList.add('scrolled'); }
++      else { nav.classList.remove('scrolled'); }
++    }, { passive: true });
++
++    // =============================================
++    // SCROLL REVEAL (IntersectionObserver)
++    // =============================================
++    const revealEls = document.querySelectorAll('.reveal');
++    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
++      const revealObserver = new IntersectionObserver((entries) => {
++        entries.forEach(entry => {
++          if (entry.isIntersecting) {
++            entry.target.classList.add('visible');
++            revealObserver.unobserve(entry.target);
++          }
++        });
++      }, { threshold: 0.15 });
++      revealEls.forEach(el => revealObserver.observe(el));
++    } else {
++      revealEls.forEach(el => el.classList.add('visible'));
++    }
++
++    // =============================================
++    // SKILL BAR ANIMATION
++    // =============================================
++    const skillBars = document.querySelectorAll('.skill-fill');
++    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
++      const skillObserver = new IntersectionObserver((entries) => {
++        entries.forEach(entry => {
++          if (entry.isIntersecting) {
++            entry.target.classList.add('animate');
++            skillObserver.unobserve(entry.target);
++          }
++        });
++      }, { threshold: 0.5 });
++      skillBars.forEach(bar => skillObserver.observe(bar));
++    } else {
++      skillBars.forEach(bar => bar.classList.add('animate'));
++    }
++
++    // =============================================
++    // BACK TO TOP BUTTON
++    // =============================================
++    const backToTop = document.getElementById('backToTop');
++    window.addEventListener('scroll', () => {
++      if (window.scrollY > 600) { backToTop.classList.add('visible'); }
++      else { backToTop.classList.remove('visible'); }
++    }, { passive: true });
++    backToTop.addEventListener('click', () => {
++      window.scrollTo({ top: 0, behavior: 'smooth' });
++    });
++
++    // =============================================
++    // FEATHER ICONS INIT
++    // =============================================
++    feather.replace();
++
+   </script>
+ </body>
+ </html>
+
+commit 9a5fb9b3ef00583bf52df2705d54360b96454192
+Author: PolatAlemdarPLT34 <ahmedsillybp@gmail.com>
+Date:   Wed Oct 8 20:03:57 2025 +0500
+
+    Initial commit: portfolio site with assets and docs
+
+diff --git a/index.html b/index.html
+new file mode 100644
+index 0000000..804bc71
+--- /dev/null
++++ b/index.html
+@@ -0,0 +1,833 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="UTF-8" />
++  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
++  <title>Interactive Portfolio | AI & ML Developer</title>
++  <script src="https://cdn.tailwindcss.com"></script>
++  <script src="https://unpkg.com/feather-icons"></script>
++  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
++  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
++
++  <style>
++    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
++    
++    * {
++      margin: 0;
++      padding: 0;
++      box-sizing: border-box;
++    }
++    
++    body {
++      font-family: "Inter", sans-serif;
++      overflow-x: hidden;
++      background: linear-gradient(135deg, #0a0e27 0%, #050a15 50%, #0d1b2a 100%);
++      color: white;
++      position: relative;
++    }
++    
++    /* Layered Canvas Backgrounds */
++    #neural-canvas, #particle-canvas, #grid-canvas, #matrix-canvas {
++      position: fixed;
++      top: 0;
++      left: 0;
++      width: 100%;
++      height: 100%;
++      pointer-events: none;
++    }
++    
++    #neural-canvas {
++      z-index: 1;
++      opacity: 0.6;
++    }
++    
++    #particle-canvas {
++      z-index: 2;
++      opacity: 0.4;
++    }
++    
++    #grid-canvas {
++      z-index: 0;
++      opacity: 0.3;
++    }
++    
++    #matrix-canvas {
++      z-index: 3;
++      opacity: 0.15;
++    }
++    
++    .content-wrapper {
++      position: relative;
++      z-index: 10;
++    }
++    
++    .custom-cursor {
++      position: fixed;
++      width: 20px;
++      height: 20px;
++      border: 2px solid rgba(0, 255, 255, 0.8);
++      border-radius: 50%;
++      pointer-events: none;
++      z-index: 9999;
++      transform: translate(-50%, -50%);
++      transition: all 0.15s ease-out;
++      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
++    }
++    
++    .custom-cursor-outer {
++      position: fixed;
++      width: 40px;
++      height: 40px;
++      border: 1px solid rgba(138, 43, 226, 0.3);
++      border-radius: 50%;
++      pointer-events: none;
++      z-index: 9998;
++      transform: translate(-50%, -50%);
++      transition: all 0.2s ease-out;
++    }
++    
++    .menu-item {
++      position: relative;
++      transition: color 0.3s ease;
++    }
++    
++    .menu-item::after {
++      content: "";
++      position: absolute;
++      width: 0;
++      height: 2px;
++      bottom: -4px;
++      left: 0;
++      background: linear-gradient(90deg, #00ffff, #8a2be2);
++      transition: width 0.3s ease;
++      box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
++    }
++    
++    .menu-item:hover::after {
++      width: 100%;
++    }
++    
++    .menu-item:hover {
++      color: #00ffff;
++      text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
++    }
++    
++    .typing-text::after {
++      content: "|";
++      animation: blink 1s infinite;
++      color: #00ffff;
++    }
++    
++    @keyframes blink {
++      0%, 100% { opacity: 1; }
++      50% { opacity: 0; }
++    }
++    
++    .glow-text {
++      text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
++    }
++    
++    .project-card {
++      transition: transform 0.3s ease, box-shadow 0.3s ease;
++      border: 1px solid rgba(138, 43, 226, 0.3);
++    }
++    
++    .project-card:hover {
++      transform: translateY(-10px);
++      box-shadow: 0 20px 40px rgba(0, 255, 255, 0.3);
++      border-color: rgba(0, 255, 255, 0.6);
++    }
++    
++    .project-card:hover .project-overlay {
++      opacity: 1;
++    }
++    
++    .btn-glow {
++      box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
++      transition: all 0.3s ease;
++    }
++    
++    .btn-glow:hover {
++      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
++      transform: translateY(-2px);
++    }
++    
++    input, textarea {
++      transition: all 0.3s ease;
++    }
++    
++    input:focus, textarea:focus {
++      border-color: #00ffff !important;
++      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3) !important;
++    }
++    
++    @keyframes float {
++      0%, 100% { transform: translateY(0px); }
++      50% { transform: translateY(-20px); }
++    }
++    
++    .float-animation {
++      animation: float 6s ease-in-out infinite;
++    }
++    @keyframes spin-slow {
++      0% { transform: rotate(0deg); }
++      100% { transform: rotate(360deg); }
++    }
++  </style>
++</head>
++<body>
++  <!-- Multi-layered Canvas Backgrounds -->
++  <canvas id="grid-canvas"></canvas>
++  <canvas id="neural-canvas"></canvas>
++  <canvas id="particle-canvas"></canvas>
++  <canvas id="matrix-canvas"></canvas>
++  
++  <!-- Custom Cursor -->
++  <div class="custom-cursor"></div>
++  <div class="custom-cursor-outer"></div>
++
++  <div class="content-wrapper">
++    <nav class="fixed w-full px-8 py-6 z-50 flex justify-between items-center backdrop-blur-sm bg-black bg-opacity-20">
++      <div class="text-2xl font-bold tracking-tighter glow-text">
++        AHMAD<span class="text-blue-400">.</span>
++      </div>
++      <div class="hidden md:flex space-x-8">
++        <a href="#" class="menu-item">Home</a>
++        <a href="#projects" class="menu-item">Projects</a>
++        <a href="#about" class="menu-item">About</a>
++        <a href="#contact" class="menu-item">Contact</a>
++      </div>
++      <button class="md:hidden">
++        <i data-feather="menu"></i>
++      </button>
++    </nav>
++
++    <main class="container mx-auto px-4 pt-32 pb-20">
++      <section class="min-h-screen flex flex-col justify-center">
++        <h1 class="text-5xl md:text-8xl font-bold mb-6 float-animation">
++          Hello, I'm <span class="text-blue-400 glow-text">AHMAD</span>
++        </h1>
++        <div class="text-xl md:text-2xl mb-12">
++          <span class="typing-text">AI Developer & ML Engineer</span>
++        </div>
++        <div class="flex space-x-4">
++          <a href="#projects" class="px-8 py-3 bg-blue-400 text-white rounded-full font-medium hover:bg-blue-500 transition btn-glow">
++            View Projects
++          </a>
++              <a href="#contact" class="px-8 py-3 border border-cyan-400 rounded-full font-medium hover:bg-cyan-400 hover:text-black transition btn-glow">
++            Contact Me
++          </a>
++          <a href="assets/docs/resume.pdf" target="_blank" class="px-8 py-3 border border-purple-400 rounded-full font-medium hover:bg-purple-400 hover:text-white transition btn-glow">
++            View Resume
++          </a>
++</div>
++      </section>
++
++      <section id="projects" class="py-20">
++        <h2 class="text-3xl md:text-5xl font-bold mb-16">
++          Selected <span class="text-purple-400 glow-text">Projects</span>
++        </h2>
++        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
++          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
++            <img src="assets/images/projects/neural.png" alt="Neural Network Visualizer" class="w-full h-full object-cover">
++            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
++              <h3 class="text-2xl font-bold mb-2 glow-text">Neural Network Visualizer</h3>
++              <p class="text-center mb-4 text-gray-300">AI-based WebGL visualization of deep learning models.</p>
++              <a href="assets/docs/projects/neural-network-visualizer.html" target="_blank" class="px-6 py-2 bg-blue-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
++            </div>
++          </div>
++          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
++            <img src="assets/images/projects/cdps2.png" alt="Crime Detection and Prevention System (CDPS)" class="w-full h-full object-cover">
++            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
++              <h3 class="text-2xl font-bold mb-2 glow-text">Crime Detection and Prevention System (CDPS)</h3>
++              <p class="text-center mb-4 text-gray-300">Real-time AI that detects threats and helps prevent crime using vision, NLP, and risk scoring</p>
++              <a href="assets/docs/projects/cdps.html" target="_blank" class="px-6 py-2 bg-purple-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
++            </div>
++          </div>
++          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
++            <img src="assets/images/projects/garpus.png" alt="Garpus AI - Business Forecast System" class="w-full h-full object-cover">
++            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
++              <h3 class="text-2xl font-bold mb-2 glow-text">Garpus AI</h3>
++              <p class="text-center mb-4 text-gray-300">AI-based forecasts and marketing insights for small businesses.</p>
++              <a href="assets/docs/projects/garpus-ai.html" target="_blank" class="px-6 py-2 bg-green-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
++            </div>
++          </div>
++          <div class="project-card relative overflow-hidden rounded-xl aspect-video bg-gray-900">
++            <img src="assets/images/projects/nlp.png" alt="Natural Language Processor" class="w-full h-full object-cover">
++            <div class="project-overlay absolute inset-0 bg-black bg-opacity-90 flex flex-col justify-center items-center p-8 opacity-0 transition-all duration-300">
++              <h3 class="text-2xl font-bold mb-2 glow-text">Natural Language Processor</h3>
++              <p class="text-center mb-4 text-gray-300">Advanced NLP pipeline for text analysis and generation.</p>
++              <a href="assets/docs/projects/nlp-processor.html" target="_blank" class="px-6 py-2 bg-purple-400 text-white rounded-full font-medium btn-glow">View Case Study</a>
++            </div>
++          </div>
++        </div>
++</section>
++
++      <section id="about" class="py-20">
++        <div class="flex flex-col md:flex-row gap-12 items-center">
++          <div class="md:w-full flex flex-col md:flex-row gap-8">
++                <div class="relative w-64 h-64 mx-auto md:mx-0">
++              <div class="absolute inset-0 rounded-full border-4 border-cyan-400/50 bg-gradient-to-br from-blue-500/20 to-purple-500/20 overflow-hidden">
++                <img src="assets/images/profile.jpg" alt="Profile Photo" class="w-full h-full object-cover">
++              </div>
++              <div class="absolute -inset-2 rounded-full border-2 border-purple-400/30 animate-spin-slow" style="animation-duration: 10s;"></div>
++            </div>
++<div class="space-y-12">
++              <div class="bg-gray-900 bg-opacity-50 backdrop-blur-sm border border-purple-500/30 rounded-xl p-8 flex-1">
++              <h2 class="text-3xl md:text-5xl font-bold mb-8">About <span class="text-cyan-400 glow-text">Me</span></h2>
++<p class="text-lg mb-6 text-gray-200">
++                An AI Engineer who turns data into intelligence and ideas into automation.
++I specialize in machine learning, computer vision, and NLP, crafting smart systems that see, think, and respond.
++              </p>
++              <p class="text-lg mb-6 text-gray-200">
++                From building deep learning models for market prediction to facial emotion recognition and AI-powered dashboards, I've brought real-world ideas to life for global clients.
++              <p class="text-lg mb-6 text-gray-200">
++              I love working where creativity meets code, exploring how data and design can create powerful digital experiences.
++Always learning. Always building. Always pushing AI beyond the ordinary.
++              </p>
++              <div class="grid grid-cols-2 gap-4 mb-8">
++                <div class="flex items-center"><i data-feather="cpu" class="mr-2 text-blue-400"></i><span>AI/ML Systems</span></div>
++                <div class="flex items-center"><i data-feather="database" class="mr-2 text-blue-400"></i><span>Data Handling & Deployment</span></div>
++                <div class="flex items-center"><i data-feather="activity" class="mr-2 text-blue-400"></i><span>Data Visualization</span></div>
++                <div class="flex items-center"><i data-feather="cpu" class="mr-2 text-blue-400"></i><span>Deep Learning</span></div>
++              </div>
++
++              <h3 class="text-2xl font-bold mb-4 glow-text">Soft Skills</h3>
++              <div class="space-y-4">
++                <div>
++                  <div class="flex justify-between mb-1">
++                    <span class="text-gray-200">Analytical Thinking</span>
++                    <span class="text-cyan-400">90%</span>
++                  </div>
++                  <div class="w-full bg-gray-900 rounded-full h-2">
++                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 90%"></div>
++                  </div>
++                </div>
++                <div>
++                  <div class="flex justify-between mb-1">
++                    <span class="text-gray-200">Problem-solving</span>
++                    <span class="text-cyan-400">85%</span>
++                  </div>
++                  <div class="w-full bg-gray-900 rounded-full h-2">
++                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 85%"></div>
++                  </div>
++                </div>
++                <div>
++                  <div class="flex justify-between mb-1">
++                    <span class="text-gray-200">Communication</span>
++                    <span class="text-cyan-400">80%</span>
++                  </div>
++                  <div class="w-full bg-gray-900 rounded-full h-2">
++                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 80%"></div>
++                  </div>
++                </div>
++                <div>
++                  <div class="flex justify-between mb-1">
++                    <span class="text-gray-200">Team Collaboration</span>
++                    <span class="text-cyan-400">95%</span>
++                  </div>
++                  <div class="w-full bg-gray-900 rounded-full h-2">
++                    <div class="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full" style="width: 95%"></div>
++                  </div>
++                </div>
++              </div>
++            </div>
++
++            <div class="bg-gray-900 bg-opacity-50 backdrop-blur-sm border border-purple-500/30 rounded-xl p-8">
++              <h3 class="text-3xl font-bold mb-6 glow-text">Education</h3>
++              <div class="space-y-6">
++                <div class="border-l-2 border-cyan-400 pl-6 py-2">
++                  <h4 class="text-xl font-bold text-cyan-400">Bachelors Of Artificial Intelligence</h4>
++                  <p class="text-gray-300">UMT | 11/2021 ΓÇô 07/2025 | Pakistan</p>
++                  <p class="text-gray-400 mt-2">Specialized in Machine Learning, Neural Networks and AI applications development.</p>
++                </div>
++                <div class="border-l-2 border-purple-400 pl-6 py-2">
++                  <h4 class="text-xl font-bold text-purple-400">Intermediate in Computer Science</h4>
++                  <p class="text-gray-300">Punjab Group of Colleges | 09/2019 ΓÇô 06/2021 | Pakistan</p>
++                  <p class="text-gray-400 mt-2">Focus on fundamental programming, data structures and computer science principles.</p>
++                </div>
++                <div class="border-l-2 border-blue-400 pl-6 py-2">
++                  <h4 class="text-xl font-bold text-blue-400">Matriculation in Science</h4>
++                  <p class="text-gray-300">Sir Syed Pilot High School Wazirabad | 03/2017 ΓÇô 04/2019 | Pakistan</p>
++                  <p class="text-gray-400 mt-2">Core science subjects including Mathematics, Physics and Computer Science.</p>
++                </div>
++                <div class="border-l-2 border-green-400 pl-6 py-2">
++                  <h4 class="text-xl font-bold text-blue-400">Certifications</h4>
++                  <ul class="list-disc list-inside text-gray-400 space-y-1 mt-2">
++                    <li>Machine Learning - Stanford University (Coursera)</li>
++                    <li>Deep Learning Specialization - deeplearning.ai</li>
++                    <li>Python for Data Science and AI - IBM (Coursera)</li>
++                    <li>Computer Vision Fundamentals - Coursera/Udemy</li>
++                    <li>Data Analysis with Python - IBM (Coursera)</li>
++                  </ul>
++                </div>
++              </div>
++            </div>
++          </div>
++        </div>
++      </section>
++
++      <section id="contact" class="py-20">
++        <h2 class="text-3xl md:text-5xl font-bold mb-16">
++          Let's <span class="text-purple-400 glow-text">Connect</span>
++        </h2>
++        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
++          <div>
++            <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
++            <form id="contactForm" class="space-y-6" action="https://formspree.io/f/movklznd" method="POST">
++              <div>
++                <label for="name" class="block mb-2">Name</label>
++                <input type="text" id="name" name="name" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
++              </div>
++              <div>
++                <label for="email" class="block mb-2">Email</label>
++                <input type="email" id="email" name="email" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400" />
++              </div>
++              <div>
++                <label for="message" class="block mb-2">Message</label>
++                <textarea id="message" name="message" rows="5" required class="w-full bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-400"></textarea>
++              </div>
++              <button type="submit" id="submitBtn" class="px-8 py-3 bg-cyan-400 text-black rounded-full font-medium hover:bg-cyan-500 transition btn-glow">
++                <span id="btnText">Send Message</span>
++                <span id="btnLoader" class="hidden">
++                  <span class="inline-block w-2 h-2 mx-0.5 bg-current rounded-full animate-pulse"></span>
++                  <span class="inline-block w-2 h-2 mx-0.5 bg-current rounded-full animate-pulse delay-100"></span>
++                  <span class="inline-block w-2 h-2 mx-0.5 bg-current rounded-full animate-pulse delay-200"></span>
++                </span>
++              </button>
++              <input type="text" name="_gotcha" style="display:none">
++              <div id="formSuccess" class="hidden mt-4 p-4 bg-green-500/20 border border-green-400 rounded-lg text-green-200">
++                Message sent successfully! I'll get back to you soon.
++              </div>
++              <div id="formError" class="hidden mt-4 p-4 bg-red-500/20 border border-red-400 rounded-lg text-red-200">
++                Failed to send message. Please try again later.
++              </div>
++            </form>
++            <script>
++              const form = document.getElementById('contactForm');
++              const submitBtn = document.getElementById('submitBtn');
++              const btnText = document.getElementById('btnText');
++              const btnLoader = document.getElementById('btnLoader');
++              const successMessage = document.getElementById('formSuccess');
++              const errorMessage = document.getElementById('formError');
++              
++              form.addEventListener('submit', async (e) => {
++                e.preventDefault();
++                
++                // Show loading state
++                submitBtn.disabled = true;
++                btnText.textContent = "Sending";
++                btnLoader.classList.remove('hidden');
++                
++                try {
++                  const formData = new FormData(form);
++                  const response = await fetch(form.action, {
++                    method: 'POST',
++                    body: formData,
++                    headers: {
++                      'Accept': 'application/json'
++                    }
++                  });
++                  
++                  if (response.ok) {
++                    // Success
++                    form.reset();
++                    successMessage.classList.remove('hidden');
++                    errorMessage.classList.add('hidden');
++                    setTimeout(() => {
++                      successMessage.classList.add('hidden');
++                    }, 5000);
++                  } else {
++                    // Server error
++                    throw new Error('Server error');
++                  }
++                } catch (error) {
++                  // Network or other error
++                  errorMessage.classList.remove('hidden');
++                  successMessage.classList.add('hidden');
++                  setTimeout(() => {
++                    errorMessage.classList.add('hidden');
++                  }, 5000);
++                } finally {
++                  // Reset button state
++                  submitBtn.disabled = false;
++                  btnText.textContent = "Send Message";
++                  btnLoader.classList.add('hidden');
++                }
++              });
++            </script>
++          </div>
++          <div>
++            <h3 class="text-2xl font-bold mb-6">Contact Info</h3>
++            <div class="space-y-4">
++              <div class="flex items-center">
++                <i data-feather="mail" class="mr-4 text-cyan-400"></i><span class="text-gray-200">ahmedkillybp@gmail.com</span>
++              </div>
++              <div class="flex items-center">
++                <i data-feather="map-pin" class="mr-4 text-cyan-400"></i><span class="text-gray-200">Wazirabad, Pakistan</span>
++              </div>
++            </div>
++            <div class="mt-12">
++              <h3 class="text-2xl font-bold mb-6">Follow Me</h3>
++              <div class="flex space-x-4">
++                <a href="https://github.com/PolatAlemdarPLT34" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-cyan-400 hover:text-black transition btn-glow"><i data-feather="github"></i></a>
++                <a href="https://x.com/ahmedrebel16?s=21" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="twitter"></i></a>
++                <a href="https://www.linkedin.com/in/ahmad-nadeem-a75614288" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="linkedin"></i></a>
++                <a href="https://www.instagram.com/a.h.m.e.d_nadeem" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-purple-400 hover:text-white transition btn-glow"><i data-feather="instagram"></i></a>
++                <a href="https://www.fiverr.com/s/8zQzwGp" target="_blank" class="p-3 bg-gray-900 bg-opacity-50 border border-purple-500/30 rounded-full hover:bg-green-500 hover:text-white transition btn-glow">
++                  <i data-feather="dollar-sign"></i>
++                </a>
++              </div>
++            </div>
++          </div>
++        </div>
++      </section>
++    </main>
++
++    <footer class="py-8 text-center text-gray-500">
++      <p class="text-gray-300">┬⌐ 2025 Ahmad Nadeem Butt. All rights reserved.</p>
++    </footer>
++  </div>
++
++  <script>
++    // =============================================
++    // NEURAL NETWORK CANVAS - Connected Nodes
++    // =============================================
++    const neuralCanvas = document.getElementById('neural-canvas');
++    const neuralCtx = neuralCanvas.getContext('2d');
++    neuralCanvas.width = window.innerWidth;
++    neuralCanvas.height = window.innerHeight;
++
++    const neurons = [];
++    const neuronCount = 40;
++    const maxDistance = 120;
++    let mouseX = 0, mouseY = 0;
++
++    class Neuron {
++      constructor() {
++        this.x = Math.random() * neuralCanvas.width;
++        this.y = Math.random() * neuralCanvas.height;
++        this.vx = (Math.random() - 0.5) * 0.5;
++        this.vy = (Math.random() - 0.5) * 0.5;
++        this.radius = Math.random() * 2 + 1;
++        this.pulse = Math.random() * Math.PI * 2;
++      }
++
++      update() {
++        this.x += this.vx;
++        this.y += this.vy;
++        this.pulse += 0.05;
++
++        if (this.x < 0 || this.x > neuralCanvas.width) this.vx *= -1;
++        if (this.y < 0 || this.y > neuralCanvas.height) this.vy *= -1;
++
++        const dx = mouseX - this.x;
++        const dy = mouseY - this.y;
++        const dist = Math.sqrt(dx * dx + dy * dy);
++        if (dist < 100) {
++          this.x -= dx * 0.01;
++          this.y -= dy * 0.01;
++        }
++      }
++
++      draw() {
++        const pulseSize = Math.sin(this.pulse) * 0.5 + 1;
++        neuralCtx.beginPath();
++        neuralCtx.arc(this.x, this.y, this.radius * pulseSize, 0, Math.PI * 2);
++        neuralCtx.fillStyle = `rgba(0, 255, 255, ${0.8 + Math.sin(this.pulse) * 0.2})`;
++        neuralCtx.fill();
++        neuralCtx.shadowBlur = 10;
++        neuralCtx.shadowColor = 'rgba(0, 255, 255, 0.5)';
++      }
++    }
++
++    for (let i = 0; i < neuronCount; i++) {
++      neurons.push(new Neuron());
++    }
++
++    function connectNeurons() {
++      for (let i = 0; i < neurons.length; i++) {
++        for (let j = i + 1; j < neurons.length; j++) {
++          const dx = neurons[i].x - neurons[j].x;
++          const dy = neurons[i].y - neurons[j].y;
++          const dist = Math.sqrt(dx * dx + dy * dy);
++
++          if (dist < maxDistance) {
++            const opacity = (1 - dist / maxDistance) * 0.2;
++            neuralCtx.beginPath();
++            neuralCtx.moveTo(neurons[i].x, neurons[i].y);
++            neuralCtx.lineTo(neurons[j].x, neurons[j].y);
++            neuralCtx.strokeStyle = `rgba(138, 43, 226, ${opacity})`;
++            neuralCtx.lineWidth = 0.5;
++            neuralCtx.stroke();
++          }
++        }
++      }
++    }
++
++    let lastTime = 0;
++    const fpsLimit = 30;
++    const frameInterval = 1000 / fpsLimit;
++
++    function animateNeural(timestamp) {
++      requestAnimationFrame(animateNeural);
++      
++      const deltaTime = timestamp - lastTime;
++      if (deltaTime < frameInterval) return;
++      
++      lastTime = timestamp - (deltaTime % frameInterval);
++      
++      neuralCtx.clearRect(0, 0, neuralCanvas.width, neuralCanvas.height);
++      
++      // Process updates first
++      neurons.forEach(n => n.update());
++      
++      // Then process draws
++      neurons.forEach(n => n.draw());
++      
++      connectNeurons();
++    }
++    requestAnimationFrame(animateNeural);
++
++    // =============================================
++    // PARTICLE FLOW CANVAS - Data Streams
++    // =============================================
++    const particleCanvas = document.getElementById('particle-canvas');
++    const particleCtx = particleCanvas.getContext('2d');
++    particleCanvas.width = window.innerWidth;
++    particleCanvas.height = window.innerHeight;
++
++    const particles = [];
++    const particleCount = 50;
++
++    class Particle {
++      constructor() {
++        this.reset();
++      }
++
++      reset() {
++        this.x = Math.random() * particleCanvas.width;
++        this.y = Math.random() * particleCanvas.height;
++        this.vx = (Math.random() - 0.5) * 2;
++        this.vy = (Math.random() - 0.5) * 2;
++        this.life = Math.random() * 100;
++        this.maxLife = 100;
++        this.color = Math.random() > 0.5 ? '0, 255, 255' : '138, 43, 226';
++      }
++
++      update() {
++        this.x += this.vx;
++        this.y += this.vy;
++        this.life--;
++
++        if (this.life <= 0 || this.x < 0 || this.x > particleCanvas.width || this.y < 0 || this.y > particleCanvas.height) {
++          this.reset();
++        }
++      }
++
++      draw() {
++        const opacity = this.life / this.maxLife;
++        particleCtx.beginPath();
++        particleCtx.arc(this.x, this.y, 2, 0, Math.PI * 2);
++        particleCtx.fillStyle = `rgba(${this.color}, ${opacity * 0.6})`;
++        particleCtx.fill();
++        
++        particleCtx.beginPath();
++        particleCtx.moveTo(this.x, this.y);
++        particleCtx.lineTo(this.x - this.vx * 5, this.y - this.vy * 5);
++        particleCtx.strokeStyle = `rgba(${this.color}, ${opacity * 0.3})`;
++        particleCtx.lineWidth = 1;
++        particleCtx.stroke();
++      }
++    }
++
++    for (let i = 0; i < particleCount; i++) {
++      particles.push(new Particle());
++    }
++
++    let particleLastTime = 0;
++    
++    function animateParticles(timestamp) {
++      requestAnimationFrame(animateParticles);
++      
++      const deltaTime = timestamp - particleLastTime;
++      if (deltaTime < frameInterval) return;
++      
++      particleLastTime = timestamp - (deltaTime % frameInterval);
++      
++      particleCtx.fillStyle = 'rgba(5, 10, 21, 0.05)';
++      particleCtx.fillRect(0, 0, particleCanvas.width, particleCanvas.height);
++      
++      // Batch updates
++      particles.forEach(p => p.update());
++      
++      // Batch draws
++      particles.forEach(p => p.draw());
++    }
++    requestAnimationFrame(animateParticles);
++
++    // =============================================
++    // GRID CANVAS - Animated Waves
++    // =============================================
++    const gridCanvas = document.getElementById('grid-canvas');
++    const gridCtx = gridCanvas.getContext('2d');
++    gridCanvas.width = window.innerWidth;
++    gridCanvas.height = window.innerHeight;
++
++    let waveOffset = 0;
++    let frameCount = 0;
++
++    let gridLastTime = 0;
++    
++    function drawGrid(timestamp) {
++      requestAnimationFrame(drawGrid);
++      
++      const deltaTime = timestamp - gridLastTime;
++      if (deltaTime < frameInterval * 2) return; // Slower update for grid
++      
++      gridLastTime = timestamp - (deltaTime % (frameInterval * 2));
++      
++      gridCtx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
++      gridCtx.strokeStyle = 'rgba(138, 43, 226, 0.08)';
++      gridCtx.lineWidth = 1;
++
++      const gridSize = 80;
++      waveOffset += 0.02;
++
++      // Optimize by caching calculations
++      const cols = Math.ceil(gridCanvas.width / gridSize);
++      const rows = Math.ceil(gridCanvas.height / gridSize);
++      
++      for (let i = 0; i < cols; i++) {
++        const x = i * gridSize;
++        for (let j = 0; j < rows; j++) {
++          const y = j * gridSize;
++          const wave = Math.sin(x * 0.01 + y * 0.01 + waveOffset) * 3;
++          gridCtx.beginPath();
++          gridCtx.moveTo(x, y + wave);
++          gridCtx.lineTo(x + gridSize, y + wave);
++          gridCtx.stroke();
++        }
++      }
++    }
++    requestAnimationFrame(drawGrid);
++
++    // =============================================
++    // MATRIX CANVAS - Falling Code Effect
++    // =============================================
++    const matrixCanvas = document.getElementById('matrix-canvas');
++    const matrixCtx = matrixCanvas.getContext('2d');
++    matrixCanvas.width = window.innerWidth;
++    matrixCanvas.height = window.innerHeight;
++
++    const chars = '01πéóπéñπéªπé¿πé¬πé½πé¡πé»πé▒πé│πé╡πé╖πé╣πé╗πé╜';
++    const fontSize = 14;
++    const columns = matrixCanvas.width / fontSize;
++    const drops = Array(Math.floor(columns)).fill(1);
++
++    let matrixLastTime = 0;
++    
++    function drawMatrix(timestamp) {
++      requestAnimationFrame(drawMatrix);
++      
++      const deltaTime = timestamp - matrixLastTime;
++      if (deltaTime < 100) return; // Limit to ~10fps for matrix
++    
++      matrixLastTime = timestamp;
++      
++      matrixCtx.fillStyle = 'rgba(0, 10, 0, 0.05)';
++      matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
++      
++      matrixCtx.fillStyle = 'rgba(0, 255, 0, 0.5)';
++      matrixCtx.font = fontSize + 'px monospace';
++
++      // Batch updates and draws
++      for (let i = 0; i < drops.length; i++) {
++        if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) {
++          drops[i] = 0;
++        } else {
++          const text = chars[Math.floor(Math.random() * chars.length)];
++          matrixCtx.fillText(text, i * fontSize, drops[i] * fontSize);
++          drops[i]++;
++        }
++      }
++    }
++    requestAnimationFrame(drawMatrix);
++
++    // =============================================
++    // MOUSE TRACKING
++    // =============================================
++    let lastMouseUpdate = 0;
++    document.addEventListener('mousemove', (e) => {
++      const now = performance.now();
++      if (now - lastMouseUpdate < 16) return; // ~60fps for mouse updates
++      lastMouseUpdate = now;
++      
++      mouseX = e.clientX;
++      mouseY = e.clientY;
++      
++      const cursor = document.querySelector('.custom-cursor');
++      const cursorOuter = document.querySelector('.custom-cursor-outer');
++      cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
++      cursorOuter.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
++    });
++
++    // =============================================
++    // RESIZE HANDLING
++    // =============================================
++    window.addEventListener('resize', () => {
++      neuralCanvas.width = window.innerWidth;
++      neuralCanvas.height = window.innerHeight;
++      particleCanvas.width = window.innerWidth;
++      particleCanvas.height = window.innerHeight;
++      gridCanvas.width = window.innerWidth;
++      gridCanvas.height = window.innerHeight;
++      matrixCanvas.width = window.innerWidth;
++      matrixCanvas.height = window.innerHeight;
++    });
++
++    // =============================================
++    // GSAP ANIMATIONS
++    // =============================================
++    gsap.from('nav', { duration: 1, y: -50, opacity: 0 });
++    gsap.from('h1', { duration: 1, y: 50, opacity: 0, delay: 0.3 });
++    gsap.from('.typing-text', { duration: 1, y: 30, opacity: 0, delay: 0.6 });
++
++    // =============================================
++    // TYPING ANIMATION
++    // =============================================
++    const texts = ["AI Developer", "Machine Learning Engineer", "Creative Technologist", "Neural Network Specialist"];
++    let count = 0, index = 0, currentText = "", letter = "", isDeleting = false;
++
++    (function type() {
++      if (count === texts.length) count = 0;
++      currentText = texts[count];
++      if (isDeleting) {
++        letter = currentText.substring(0, index - 1);
++        index--;
++      } else {
++        letter = currentText.substring(0, index + 1);
++        index++;
++      }
++      document.querySelector('.typing-text').textContent = letter;
++      let typeSpeed = isDeleting ? 50 : 100;
++      if (!isDeleting && letter === currentText) {
++        typeSpeed = 2000;
++        isDeleting = true;
++      } else if (isDeleting && letter === "") {
++        isDeleting = false;
++        count++;
++        typeSpeed = 500;
++      }
++      setTimeout(type, typeSpeed);
++    })();
++
++    // Initialize feather icons
++    feather.replace();
++    // Add Fiverr icon
++    feather.icons['dollar-sign'] = {
++      contents: '<path d="M12 1L3 5v6l9 4 9-4V5l-9-4zM3 5l9 4 9-4M3 11l9 4 9-4M3 17l9 4 9-4"/>'
++    };
++  </script>
++</body>
++</html>
