@@ -15,9 +15,9 @@
     @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
     
     :root {
-      --color-primary: #2563EB;
+      --color-primary: #3B82F6;
       --color-secondary: #3B82F6;
-      --color-cta: #22C55E;
+      --color-cta: #3B82F6;
       --color-background: #F8FAFC;
       --color-text: #1E293B;
       
@@ -65,7 +65,7 @@
       transition: width 0.2s ease-out, height 0.2s ease-out, border-color 0.2s ease-out;
       box-shadow: 0 0 18px rgba(0, 255, 255, 0.6);
       will-change: transform;
-      display: none;
+      display: block;
     }
     .custom-cursor-outer {
       position: fixed;
@@ -79,19 +79,20 @@
       transform: translate(-50%, -50%);
       transition: width 0.25s ease-out, height 0.25s ease-out, border-color 0.25s ease-out;
       will-change: transform;
-      display: none;
+      display: block;
     }
     .custom-cursor.active {
       width: 40px; height: 40px;
-      border-color: rgba(34, 197, 94, 0.9);
-      box-shadow: 0 0 28px rgba(34, 197, 94, 0.6);
+      border-color: rgba(59, 130, 246, 0.9);
+      box-shadow: 0 0 28px rgba(59, 130, 246, 0.6);
     }
     .custom-cursor-outer.active {
       width: 60px; height: 60px;
-      border-color: rgba(34, 197, 94, 0.3);
+      border-color: rgba(59, 130, 246, 0.3);
     }
-    @media (hover: hover) and (pointer: fine) {
-      .custom-cursor, .custom-cursor-outer { display: block; }
+    @media (hover: none) and (pointer: coarse) {
+      .custom-cursor, .custom-cursor-outer { display: none !important; }
+      body, a, button, input, textarea, .project-card { cursor: auto !important; }
     }
 
     /* Gradient Text */
@@ -266,13 +267,13 @@
     }
     
     .btn-glow {
-      box-shadow: 0 4px 14px 0 rgba(34, 197, 94, 0.39);
+      box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
     }
     
     .btn-glow:hover {
-      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.23);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.23);
       transform: translateY(-2px);
     }
     
@@ -538,7 +539,7 @@
               <span class="typing-text text-gray-200">AI Developer & ML Engineer</span>
             </div>
             <div class="flex flex-col sm:flex-row gap-4">
-              <a href="#projects" class="px-8 py-3 bg-[#22C55E] text-white rounded-lg font-medium hover:opacity-90 transition btn-glow shadow-lg text-center min-h-[44px] flex items-center justify-center">
+              <a href="#projects" class="px-8 py-3 bg-[#3B82F6] text-white rounded-lg font-medium hover:opacity-90 transition btn-glow shadow-lg text-center min-h-[44px] flex items-center justify-center">
                 View Projects
               </a>
               <a href="#contact" class="px-8 py-3 bg-transparent text-blue-500 border-2 border-blue-500 rounded-lg font-medium hover:bg-blue-500/10 transition text-center min-h-[44px] flex items-center justify-center">
@@ -726,7 +727,7 @@
 
       <section id="contact" class="py-20">
         <h2 class="text-3xl md:text-5xl font-bold mb-16 font-heading reveal">
-          Let's <span class="text-[#22C55E] glow-text">Connect</span>
+          Let's <span class="text-[#3B82F6] glow-text">Connect</span>
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
@@ -744,7 +745,7 @@
                 <label for="message" class="block mb-2 text-gray-200">Message</label>
                 <textarea id="message" name="message" rows="5" required class="w-full bg-gray-900 bg-opacity-80 border border-gray-700 rounded-lg px-4 py-4 min-h-[44px] focus:outline-none text-gray-100 placeholder-gray-500" placeholder="How can I help you?"></textarea>
               </div>
-              <button type="submit" id="submitBtn" class="bg-[#22C55E] text-white px-8 py-3 min-h-[44px] rounded-lg font-medium hover:opacity-90 transition btn-glow w-full sm:w-auto">
+              <button type="submit" id="submitBtn" class="bg-[#3B82F6] text-white px-8 py-3 min-h-[44px] rounded-lg font-medium hover:opacity-90 transition btn-glow w-full sm:w-auto">
                 <span id="btnText">Send Message</span>
                 <span id="btnLoader" class="hidden">
                   <span class="inline-block w-2 h-2 mx-0.5 bg-current rounded-full animate-pulse"></span>
@@ -753,7 +754,7 @@
                 </span>
               </button>
               <input type="text" name="_gotcha" style="display:none">
-              <div id="formSuccess" class="hidden mt-4 p-4 bg-green-500/20 border border-green-400 rounded-lg text-green-200">
+              <div id="formSuccess" class="hidden mt-4 p-4 bg-blue-500/20 border border-blue-400 rounded-lg text-blue-200">
                 Message sent successfully! I'll get back to you soon.
               </div>
               <div id="formError" class="hidden mt-4 p-4 bg-red-500/20 border border-red-400 rounded-lg text-red-200">
@@ -827,11 +828,11 @@
             <div class="mt-12">
               <h3 class="text-2xl font-bold mb-6 text-gray-100">Follow Me</h3>
               <div class="flex space-x-4 flex-wrap gap-y-4">
-                <a href="https://github.com/ahmadnadeembutt" aria-label="GitHub Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="github"></i></a>
-                <a href="https://x.com/ahmedrebel16?s=21" aria-label="Twitter Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="twitter"></i></a>
-                <a href="https://www.linkedin.com/in/ahmad-nadeem-butt-a75614288?utm_source=share_via&utm_content=profile&utm_medium=member_ios" aria-label="LinkedIn Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="linkedin"></i></a>
-                <a href="https://www.instagram.com/a.h.m.e.d_nadeem" aria-label="Instagram Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300"><i data-feather="instagram"></i></a>
-                <a href="https://www.fiverr.com/ahmadnadeembutt" aria-label="Fiverr Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(34,197,94,0.5)] hover:text-[#22C55E] hover:shadow-lg transition-all duration-300">
+                <a href="https://github.com/ahmadnadeembutt" aria-label="GitHub Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(59,130,246,0.5)] hover:text-[#3B82F6] hover:shadow-lg transition-all duration-300"><i data-feather="github"></i></a>
+                <a href="https://x.com/ahmedrebel16?s=21" aria-label="Twitter Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(59,130,246,0.5)] hover:text-[#3B82F6] hover:shadow-lg transition-all duration-300"><i data-feather="twitter"></i></a>
+                <a href="https://www.linkedin.com/in/ahmad-nadeem-butt-a75614288?utm_source=share_via&utm_content=profile&utm_medium=member_ios" aria-label="LinkedIn Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(59,130,246,0.5)] hover:text-[#3B82F6] hover:shadow-lg transition-all duration-300"><i data-feather="linkedin"></i></a>
+                <a href="https://www.instagram.com/a.h.m.e.d_nadeem" aria-label="Instagram Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(59,130,246,0.5)] hover:text-[#3B82F6] hover:shadow-lg transition-all duration-300"><i data-feather="instagram"></i></a>
+                <a href="https://www.fiverr.com/ahmadnadeembutt" aria-label="Fiverr Profile" target="_blank" class="p-3 bg-[rgba(15,20,30,0.4)] backdrop-blur-md border border-[rgba(255,255,255,0.05)] min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:border-[rgba(59,130,246,0.5)] hover:text-[#3B82F6] hover:shadow-lg transition-all duration-300">
                   <i data-feather="dollar-sign"></i>
                 </a>
               </div>
@@ -921,10 +922,10 @@
         const pulseSize = Math.sin(this.pulse) * 0.5 + 1;
         neuralCtx.beginPath();
         neuralCtx.arc(this.x, this.y, this.radius * pulseSize, 0, Math.PI * 2);
-        neuralCtx.fillStyle = `rgba(0, 255, 255, ${0.8 + Math.sin(this.pulse) * 0.2})`;
+        neuralCtx.fillStyle = `rgba(59, 130, 246, ${0.8 + Math.sin(this.pulse) * 0.2})`;
         neuralCtx.fill();
         neuralCtx.shadowBlur = 10;
-        neuralCtx.shadowColor = 'rgba(0, 255, 255, 0.5)';
+        neuralCtx.shadowColor = 'rgba(59, 130, 246, 0.5)';
       }
     }
 
@@ -944,7 +945,7 @@
             neuralCtx.beginPath();
             neuralCtx.moveTo(neurons[i].x, neurons[i].y);
             neuralCtx.lineTo(neurons[j].x, neurons[j].y);
-            neuralCtx.strokeStyle = `rgba(138, 43, 226, ${opacity})`;
+            neuralCtx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
             neuralCtx.lineWidth = 0.5;
             neuralCtx.stroke();
           }
@@ -970,10 +971,10 @@
         for (let i = 0; i < columns; i++) matrixDrops[i] = Math.random() * -100;
       }
       
-      matrixCtx.fillStyle = 'rgba(0, 10, 0, 0.04)';
+      matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.04)';
       matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
       
-      matrixCtx.fillStyle = isHackMode ? '#0f0' : 'rgba(0, 255, 70, 0.9)';
+      matrixCtx.fillStyle = isHackMode ? '#0f0' : 'rgba(59, 130, 246, 0.35)';
       matrixCtx.font = matrixFontSize + 'px monospace';
       
       for (let i = 0; i < matrixDrops.length; i++) {
@@ -1088,7 +1089,7 @@ I turn data into intelligence and ideas into automation.`,
       'skills': `--- Core Tech Stack ---
 • <span class="text-yellow-400">AI/ML:</span> Deep Learning, Neural Networks, NLP, Computer Vision
 • <span class="text-blue-400">Language:</span> Python
-• <span class="text-green-400">Systems:</span> Real-time AI, Dashboard Integration
+• <span class="text-blue-400">Systems:</span> Real-time AI, Dashboard Integration
 • <span class="text-purple-400">Tools:</span> WebGL, REST APIs, Git`,
       
       'projects': `--- Selected Projects ---
