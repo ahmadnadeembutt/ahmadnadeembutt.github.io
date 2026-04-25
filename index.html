@@ -184,11 +184,11 @@
     }
     #matrix-canvas {
       z-index: 0;
-      opacity: 0.15;
+      opacity: 0.5;
     }
     #neural-canvas {
       z-index: 1;
-      opacity: 0.8;
+      opacity: 0.5;
     }
     
     @media (prefers-reduced-motion: reduce) {
@@ -974,10 +974,10 @@
         for (let i = 0; i < columns; i++) matrixDrops[i] = Math.random() * -100;
       }
       
-      matrixCtx.fillStyle = 'rgba(0, 10, 0, 0.05)';
+      matrixCtx.fillStyle = 'rgba(0, 10, 0, 0.04)';
       matrixCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
       
-      matrixCtx.fillStyle = isHackMode ? '#0f0' : 'rgba(0, 255, 0, 0.5)';
+      matrixCtx.fillStyle = isHackMode ? '#0f0' : 'rgba(0, 255, 70, 0.9)';
       matrixCtx.font = matrixFontSize + 'px monospace';
       
       for (let i = 0; i < matrixDrops.length; i++) {
