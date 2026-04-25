@@ -47,7 +47,7 @@
       position: relative;
     }
 
-    /* Custom Cursor (restored from original) */
+    /* Custom Cursor */
     @media (hover: hover) and (pointer: fine) {
       body { cursor: none; }
       a, button, input, textarea, .project-card { cursor: none; }
@@ -56,15 +56,14 @@
       position: fixed;
       width: 20px;
       height: 20px;
-      border: 2px solid rgba(0, 255, 255, 0.8);
+      border: 2px solid rgba(0, 255, 255, 0.9);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
       top: 0; left: 0;
-      margin-top: -10px;
-      margin-left: -10px;
-      transition: width 0.2s ease-out, height 0.2s ease-out, border-color 0.2s ease-out, margin 0.2s ease-out;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+      transform: translate(-50%, -50%);
+      transition: width 0.2s ease-out, height 0.2s ease-out, border-color 0.2s ease-out;
+      box-shadow: 0 0 18px rgba(0, 255, 255, 0.6);
       will-change: transform;
       display: none;
     }
@@ -72,27 +71,24 @@
       position: fixed;
       width: 40px;
       height: 40px;
-      border: 1px solid rgba(138, 43, 226, 0.4);
+      border: 1px solid rgba(138, 43, 226, 0.6);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
       top: 0; left: 0;
-      margin-top: -20px;
-      margin-left: -20px;
-      transition: width 0.25s ease-out, height 0.25s ease-out, margin 0.25s ease-out, border-color 0.25s ease-out;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s ease-out, height 0.25s ease-out, border-color 0.25s ease-out;
       will-change: transform;
       display: none;
     }
     .custom-cursor.active {
       width: 40px; height: 40px;
-      margin-top: -20px; margin-left: -20px;
       border-color: rgba(34, 197, 94, 0.9);
-      box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
+      box-shadow: 0 0 28px rgba(34, 197, 94, 0.6);
     }
     .custom-cursor-outer.active {
       width: 60px; height: 60px;
-      margin-top: -30px; margin-left: -30px;
-      border-color: rgba(34, 197, 94, 0.25);
+      border-color: rgba(34, 197, 94, 0.3);
     }
     @media (hover: hover) and (pointer: fine) {
       .custom-cursor, .custom-cursor-outer { display: block; }
@@ -1009,7 +1005,7 @@
 
       // Cursor updates on every mousemove event - no throttle
       document.addEventListener('mousemove', (e) => {
-        // Move cursor immediately
+        // Move cursor using transform (works with translate(-50%,-50%) centering)
         if (cursor) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
         if (cursorOuter) { cursorOuter.style.left = e.clientX + 'px'; cursorOuter.style.top = e.clientY + 'px'; }
         // Throttle neural network repulsion to ~60fps
