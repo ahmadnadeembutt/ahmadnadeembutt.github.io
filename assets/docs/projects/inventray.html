@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <title>Inventray – Autonomous Inventory Intelligence | Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #050a15 50%, #0d1b2a 100%);
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+        }
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.6);
+        }
+        .pipeline-step:hover {
+            transform: translateY(-4px);
+            transition: transform 0.3s ease;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0,60,130,0.3), rgba(0,20,60,0.6));
+            border: 1px solid rgba(0,191,255,0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-900 to-indigo-900 py-4 sm:py-6">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <div class="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/40 rounded-full px-4 py-1 mb-4 text-sm text-blue-300">
+                <i data-feather="zap" class="w-3 h-3"></i> Live Product at inventray.de
+            </div>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 glow-text">Inventray</h1>
+            <p class="text-sm sm:text-base text-gray-300 mb-6 max-w-2xl mx-auto">Autonomous Inventory Intelligence — One smartphone scan. Full ERP-ready inventory data. In seconds.</p>
+            <div class="flex flex-wrap gap-3 justify-center mb-6">
+                <a href="https://inventray.de" target="_blank" class="inline-flex items-center px-5 py-2 bg-blue-400 hover:bg-blue-500 text-black rounded-full font-medium btn-glow transition-all duration-300 text-sm">
+                    <i data-feather="external-link" class="mr-2 w-4 h-4"></i> Visit inventray.de
+                </a>
+                <a href="../../../index.html" class="inline-flex items-center px-5 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-full font-medium transition-all duration-300 text-sm">
+                    <i data-feather="arrow-left" class="mr-2 w-4 h-4"></i> Back to Portfolio
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+
+        <!-- Key Stats -->
+        <section class="mb-16">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="stat-card rounded-xl p-6 text-center">
+                    <p class="text-3xl font-bold text-blue-400 mb-1">93.2%</p>
+                    <p class="text-gray-400 text-sm">YOLOv8 Detection Accuracy</p>
+                </div>
+                <div class="stat-card rounded-xl p-6 text-center">
+                    <p class="text-3xl font-bold text-blue-400 mb-1">&lt;140ms</p>
+                    <p class="text-gray-400 text-sm">Processing per Image</p>
+                </div>
+                <div class="stat-card rounded-xl p-6 text-center">
+                    <p class="text-3xl font-bold text-blue-400 mb-1">0</p>
+                    <p class="text-gray-400 text-sm">Special Hardware Required</p>
+                </div>
+                <div class="stat-card rounded-xl p-6 text-center">
+                    <p class="text-3xl font-bold text-blue-400 mb-1">ERP</p>
+                    <p class="text-gray-400 text-sm">SAP & Dynamics Ready</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Overview -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Project Overview</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <p class="text-lg text-gray-300 mb-6">
+                    Inventray is an AI-powered inventory platform that eliminates manual stock counting. Using any modern smartphone or tablet, <span class="text-blue-400">Inventray One</span> scans a shelf or warehouse, identifies every product using computer vision, estimates depth and spatial structure in 3D, and delivers structured inventory data ready to be pushed directly into any ERP system — in under 140ms per image.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-blue-400">The Problem It Solves</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="flex gap-2"><i data-feather="x-circle" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i> Manual counting is slow and error-prone</li>
+                            <li class="flex gap-2"><i data-feather="x-circle" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i> Barcode scanners require special MDE hardware</li>
+                            <li class="flex gap-2"><i data-feather="x-circle" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i> Stock errors cause lost revenue and overstock waste</li>
+                            <li class="flex gap-2"><i data-feather="x-circle" class="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5"></i> Frequent recounts tie up staff and resources</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-blue-400">Key Features</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="flex gap-2"><i data-feather="check-circle" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i> Works on any modern smartphone — no special hardware</li>
+                            <li class="flex gap-2"><i data-feather="check-circle" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i> Real-time processing under 140ms per image</li>
+                            <li class="flex gap-2"><i data-feather="check-circle" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i> Confidence scoring flags uncertain counts</li>
+                            <li class="flex gap-2"><i data-feather="check-circle" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i> 3D detection for stacked/overlapping items</li>
+                            <li class="flex gap-2"><i data-feather="check-circle" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i> Full audit trail with timestamp and device ID</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Screenshots -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text text-center">Product Screenshots</h2>
+            
+            <div class="max-w-[320px] mx-auto relative group">
+                <!-- Mobile Frame -->
+                <div class="relative bg-gray-800 rounded-[2.5rem] overflow-hidden border-[12px] border-gray-900 shadow-[0_0_50px_rgba(0,191,255,0.15)] aspect-[9/19] flex flex-col">
+                    
+                    <!-- Carousel Container -->
+                    <div id="carousel" class="flex-1 flex transition-transform duration-500 ease-in-out h-full w-full">
+                        
+                        <!-- Slide 1 -->
+                        <div class="w-full h-full flex-shrink-0 relative">
+                            <img src="../../../WhatsApp Image 2026-04-24 at 8.08.41 PM.jpeg" alt="Scanning Interface" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-gray-900 to-transparent pt-12 pb-4 text-center">
+                                <p class="text-white font-medium text-sm drop-shadow-md">Scanning Interface</p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2 -->
+                        <div class="w-full h-full flex-shrink-0 relative">
+                            <img src="../../../WhatsApp Image 2026-04-24 at 8.08.40 PM.jpeg" alt="Results & Analytics" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-gray-900 to-transparent pt-12 pb-4 text-center">
+                                <p class="text-white font-medium text-sm drop-shadow-md">Results &amp; Analytics</p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3 -->
+                        <div class="w-full h-full flex-shrink-0 relative">
+                            <img src="../../../bar.jpeg" alt="Analytics Dashboard" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-gray-900 to-transparent pt-12 pb-4 text-center">
+                                <p class="text-white font-medium text-sm drop-shadow-md">Analytics Dashboard</p>
+                            </div>
+                        </div>
+
+                        <!-- Slide 4 -->
+                        <div class="w-full h-full flex-shrink-0 relative">
+                            <img src="../../../a.jpeg" alt="AI Detection" class="absolute inset-0 w-full h-full object-cover">
+                            <div class="absolute bottom-0 w-full bg-gradient-to-t from-gray-900 to-transparent pt-12 pb-4 text-center">
+                                <p class="text-white font-medium text-sm drop-shadow-md">AI Detection View</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+
+                <!-- Navigation Buttons (Outside Frame for visibility, absolute positioned) -->
+                <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 sm:-translate-x-16 bg-gray-800 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors border border-gray-700 opacity-0 group-hover:opacity-100 focus:opacity-100 outline-none">
+                    <i data-feather="chevron-left" class="w-5 h-5"></i>
+                </button>
+                <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 sm:translate-x-16 bg-gray-800 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg transition-colors border border-gray-700 opacity-0 group-hover:opacity-100 focus:opacity-100 outline-none">
+                    <i data-feather="chevron-right" class="w-5 h-5"></i>
+                </button>
+
+                <!-- Indicator Dots -->
+                <div class="absolute -bottom-8 left-0 right-0 flex justify-center gap-2" id="carousel-dots">
+                    <button class="w-2 h-2 rounded-full bg-blue-500 transition-all"></button>
+                    <button class="w-2 h-2 rounded-full bg-gray-600 transition-all"></button>
+                    <button class="w-2 h-2 rounded-full bg-gray-600 transition-all"></button>
+                    <button class="w-2 h-2 rounded-full bg-gray-600 transition-all"></button>
+                </div>
+            </div>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const carousel = document.getElementById('carousel');
+                    const prevBtn = document.getElementById('prevBtn');
+                    const nextBtn = document.getElementById('nextBtn');
+                    const dots = document.getElementById('carousel-dots').children;
+                    const slides = carousel.children.length;
+                    let currentIndex = 0;
+                    let autoSlideInterval;
+
+                    const updateCarousel = () => {
+                        carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+                        Array.from(dots).forEach((dot, index) => {
+                            if (index === currentIndex) {
+                                dot.classList.replace('bg-gray-600', 'bg-blue-500');
+                                dot.classList.add('w-4');
+                            } else {
+                                dot.classList.replace('bg-blue-500', 'bg-gray-600');
+                                dot.classList.remove('w-4');
+                            }
+                        });
+                    };
+
+                    const nextSlide = () => {
+                        currentIndex = (currentIndex + 1) % slides;
+                        updateCarousel();
+                    };
+
+                    const prevSlide = () => {
+                        currentIndex = (currentIndex - 1 + slides) % slides;
+                        updateCarousel();
+                    };
+
+                    const startAutoSlide = () => {
+                        stopAutoSlide();
+                        autoSlideInterval = setInterval(nextSlide, 3500);
+                    };
+
+                    const stopAutoSlide = () => {
+                        clearInterval(autoSlideInterval);
+                    };
+
+                    nextBtn.addEventListener('click', () => { nextSlide(); startAutoSlide(); });
+                    prevBtn.addEventListener('click', () => { prevSlide(); startAutoSlide(); });
+
+                    Array.from(dots).forEach((dot, index) => {
+                        dot.addEventListener('click', () => {
+                            currentIndex = index;
+                            updateCarousel();
+                            startAutoSlide();
+                        });
+                    });
+
+                    // Pause on hover
+                    carousel.parentElement.addEventListener('mouseenter', stopAutoSlide);
+                    carousel.parentElement.addEventListener('mouseleave', startAutoSlide);
+
+                    updateCarousel();
+                    startAutoSlide();
+                });
+            </script>
+        </section>
+
+        <!-- AI Pipeline -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">AI Processing Pipeline</h2>
+            <div class="grid sm:grid-cols-2 md:grid-cols-5 gap-4">
+                <div class="pipeline-step bg-gray-800 rounded-xl p-5 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3 text-black font-bold">1</div>
+                    <h3 class="font-semibold mb-1 text-sm">Camera Scan</h3>
+                    <p class="text-gray-400 text-xs">Shelf or warehouse captured via smartphone</p>
+                </div>
+                <div class="pipeline-step bg-gray-800 rounded-xl p-5 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3 text-black font-bold">2</div>
+                    <h3 class="font-semibold mb-1 text-sm">Object Detection</h3>
+                    <p class="text-gray-400 text-xs">YOLOv8 identifies individual products at 93.2%</p>
+                </div>
+                <div class="pipeline-step bg-gray-800 rounded-xl p-5 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3 text-black font-bold">3</div>
+                    <h3 class="font-semibold mb-1 text-sm">3D Depth</h3>
+                    <p class="text-gray-400 text-xs">MiDaS v3 analyzes depth & spatial structure</p>
+                </div>
+                <div class="pipeline-step bg-gray-800 rounded-xl p-5 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3 text-black font-bold">4</div>
+                    <h3 class="font-semibold mb-1 text-sm">3D Fusion</h3>
+                    <p class="text-gray-400 text-xs">Intelligent 2D + 3D data merging</p>
+                </div>
+                <div class="pipeline-step bg-gray-800 rounded-xl p-5 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3 text-black font-bold">5</div>
+                    <h3 class="font-semibold mb-1 text-sm">ERP Output</h3>
+                    <p class="text-gray-400 text-xs">Structured JSON data for your system</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Technical Stack</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">Core Technologies</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <i data-feather="smartphone" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span><span class="text-white font-medium">Mobile:</span> React Native / Flutter (iOS & Android)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-feather="server" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span><span class="text-white font-medium">Backend:</span> FastAPI + PyTorch + TorchServe</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-feather="cpu" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span><span class="text-white font-medium">AI Models:</span> YOLOv8 (detection) + MiDaS v3 (depth)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-feather="cloud" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span><span class="text-white font-medium">Cloud:</span> Docker-based, horizontally scalable</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-feather="code" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span><span class="text-white font-medium">API:</span> API-first design, ERP-agnostic JSON output</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">ERP Compatibility</h3>
+                        <div class="space-y-3">
+                            <div class="bg-gray-700/50 rounded-lg px-4 py-3 flex items-center gap-3">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400"></i>
+                                <span class="text-gray-200">SAP</span>
+                            </div>
+                            <div class="bg-gray-700/50 rounded-lg px-4 py-3 flex items-center gap-3">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400"></i>
+                                <span class="text-gray-200">Microsoft Dynamics</span>
+                            </div>
+                            <div class="bg-gray-700/50 rounded-lg px-4 py-3 flex items-center gap-3">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400"></i>
+                                <span class="text-gray-200">Custom / Bespoke Systems</span>
+                            </div>
+                            <div class="bg-gray-700/50 rounded-lg px-4 py-3 flex items-center gap-3">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400"></i>
+                                <span class="text-gray-200">REST API — any Warenwirtschaft backend</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Industries & Use Cases</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-feather="shopping-cart" class="w-6 h-6 text-blue-300"></i>
+                        <h3 class="text-xl font-semibold">Retail</h3>
+                    </div>
+                    <p class="text-gray-300">Shelf inventory in supermarkets and retail chains — fast, precise, no downtime needed during store hours.</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-feather="package" class="w-6 h-6 text-blue-300"></i>
+                        <h3 class="text-xl font-semibold">Warehouse & Logistics</h3>
+                    </div>
+                    <p class="text-gray-300">Stock capture in logistics centers and distribution warehouses — entire aisles scanned in minutes instead of hours.</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-feather="coffee" class="w-6 h-6 text-blue-300"></i>
+                        <h3 class="text-xl font-semibold">Gastronomy</h3>
+                    </div>
+                    <p class="text-gray-300">Ingredients, walk-in coolers, and storage rooms — reduce spoilage, improve transparency, and cut prep time.</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <i data-feather="tool" class="w-6 h-6 text-blue-300"></i>
+                        <h3 class="text-xl font-semibold">Industry</h3>
+                    </div>
+                    <p class="text-gray-300">Volume measurement for bulk goods, liquids, and irregular-shaped materials using 3D spatial understanding.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Sample -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Code Sample — Inventory Event</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="bg-black/30 border border-white/10 rounded-lg overflow-hidden">
+                    <pre class="text-blue-300 text-sm overflow-x-auto p-6"><code>// Example ERP Output — Structured Inventory Event (JSON)
+{
+  "event_type": "INVENTORY_SCAN",
+  "timestamp": "2025-04-25T14:32:10Z",
+  "device_id": "INV-PHONE-001",
+  "location": "Shelf A3 – Cold Aisle",
+  "items": [
+    {
+      "product_id": "SKU-98231",
+      "name": "Whole Milk 1L",
+      "count": 14,
+      "confidence": 0.97,
+      "detection_method": "YOLOv8_2D+MiDaS_3D"
+    },
+    {
+      "product_id": "SKU-44812",
+      "name": "Greek Yogurt 500g",
+      "count": 8,
+      "confidence": 0.88,
+      "detection_method": "YOLOv8_2D+MiDaS_3D",
+      "flag": "LOW_CONFIDENCE"
+    }
+  ],
+  "scan_duration_ms": 137,
+  "erp_target": "SAP_S4HANA"
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Results from Real Test Scenarios</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">Measured Performance</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-300">Product Detection Accuracy</span>
+                                    <span class="text-blue-400 font-bold">93.2%</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-blue-400 to-indigo-500 h-2 rounded-full" style="width: 93%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-300">Processing Speed</span>
+                                    <span class="text-blue-400 font-bold">&lt;140ms/frame</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-blue-400 to-indigo-500 h-2 rounded-full" style="width: 96%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-gray-300">ERP Integration Reliability</span>
+                                    <span class="text-blue-400 font-bold">99.5%</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-blue-400 to-indigo-500 h-2 rounded-full" style="width: 99%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">Business Impact</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <i data-feather="trending-up" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span>Eliminates manual counting labor costs entirely</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-feather="trending-up" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span>Reduces stock errors and associated revenue losses</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-feather="trending-up" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span>No hardware procurement — uses existing devices</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-feather="trending-up" class="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5"></i>
+                                <span>Audit-trail compliance out of the box</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">&copy; 2025 Ahmad Nadeem Butt. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>

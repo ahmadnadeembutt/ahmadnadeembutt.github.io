@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head><title>Generate Thumbnail</title></head>
+<body style="background:#111;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:16px;">
+<canvas id="c" width="1320" height="742" style="max-width:100%;border:1px solid #333;"></canvas>
+<button onclick="download()" style="padding:12px 32px;background:#00bfff;color:#000;font-weight:bold;border:none;border-radius:8px;cursor:pointer;font-size:16px;">Download housing.png</button>
+<script>
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+const W = c.width, H = c.height;
+
+// Background
+ctx.fillStyle = '#050a15';
+ctx.fillRect(0, 0, W, H);
+
+// Subtle gradient overlay
+const bg = ctx.createRadialGradient(W*0.25, H*0.5, 0, W*0.25, H*0.5, 400);
+bg.addColorStop(0, 'rgba(0,50,120,0.25)');
+bg.addColorStop(1, 'rgba(0,0,0,0)');
+ctx.fillStyle = bg;
+ctx.fillRect(0, 0, W, H);
+
+// --- Draw Hexagon ---
+function hexagon(cx, cy, r) {
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const angle = (Math.PI / 3) * i - Math.PI / 6;
+    const x = cx + r * Math.cos(angle);
+    const y = cy + r * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+const hx = 290, hy = H * 0.42, hr = 200;
+
+// Hexagon glow
+ctx.shadowColor = '#00bfff';
+ctx.shadowBlur = 40;
+hexagon(hx, hy, hr);
+ctx.strokeStyle = 'rgba(0,191,255,0.85)';
+ctx.lineWidth = 4;
+ctx.stroke();
+ctx.shadowBlur = 0;
+
+// Inner hexagon fill
+hexagon(hx, hy, hr - 4);
+ctx.fillStyle = 'rgba(0,20,60,0.6)';
+ctx.fill();
+
+// --- House icon inside hexagon ---
+ctx.strokeStyle = 'rgba(59,130,246,0.9)';
+ctx.lineWidth = 5;
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+
+// House body
+const houseW = 130, houseH = 90;
+const bx = hx - houseW/2, by = hy - houseH/2 + 20;
+ctx.beginPath();
+ctx.rect(bx + 15, by + 40, houseW - 30, houseH - 40);
+ctx.stroke();
+
+// Roof
+ctx.beginPath();
+ctx.moveTo(bx, by + 42);
+ctx.lineTo(hx, by - 20);
+ctx.lineTo(bx + houseW, by + 42);
+ctx.stroke();
+
+// Door
+ctx.beginPath();
+ctx.rect(hx - 18, by + houseH - 20, 36, 20);
+ctx.stroke();
+
+// Windows
+ctx.beginPath();
+ctx.rect(bx + 22, by + 50, 28, 22);
+ctx.stroke();
+ctx.beginPath();
+ctx.rect(bx + houseW - 50, by + 50, 28, 22);
+ctx.stroke();
+
+// Glow dots on corners
+[
+  [bx + 22, by + 50], [bx + houseW - 50, by + 50],
+  [hx, by - 20], [bx, by + 42], [bx + houseW, by + 42]
+].forEach(([px, py]) => {
+  ctx.beginPath();
+  ctx.arc(px, py, 7, 0, Math.PI*2);
+  ctx.fillStyle = '#00bfff';
+  ctx.shadowColor = '#00bfff';
+  ctx.shadowBlur = 16;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+});
+
+// --- Bottom label ---
+ctx.textAlign = 'center';
+ctx.font = 'bold 24px Arial';
+ctx.fillStyle = '#00bfff';
+ctx.shadowColor = '#00bfff';
+ctx.shadowBlur = 12;
+ctx.fillText('AI HOUSING EXTERIOR', hx, hy + hr + 48);
+ctx.fillText('VISUALIZER', hx, hy + hr + 80);
+ctx.shadowBlur = 0;
+
+// --- Right side: Title ---
+const rx = 700;
+
+ctx.textAlign = 'left';
+ctx.font = 'bold 96px Arial';
+ctx.fillStyle = '#00bfff';
+ctx.shadowColor = '#00bfff';
+ctx.shadowBlur = 20;
+ctx.fillText('AI HOUSING', rx, 180);
+ctx.shadowBlur = 0;
+
+ctx.font = 'bold 90px Arial';
+ctx.fillStyle = '#ffffff';
+ctx.fillText('EXTERIOR', rx, 275);
+ctx.fillText('VISUALIZER', rx, 365);
+
+// Divider line
+ctx.beginPath();
+ctx.moveTo(rx, 400);
+ctx.lineTo(W - 40, 400);
+ctx.strokeStyle = 'rgba(0,191,255,0.3)';
+ctx.lineWidth = 2;
+ctx.stroke();
+
+// Bullet points
+ctx.font = '32px Arial';
+ctx.fillStyle = '#d1d5db';
+const bullets = [
+  '• Upload Photo & Pick Finishes',
+  '• AI-Powered Before/After Preview',
+  '• Powered by Google Gemini'
+];
+bullets.forEach((b, i) => {
+  ctx.fillText(b, rx, 460 + i * 52);
+});
+
+function download() {
+  const a = document.createElement('a');
+  a.download = 'housing.png';
+  a.href = c.toDataURL('image/png');
+  a.click();
+}
+</script>
+</body>
+</html>

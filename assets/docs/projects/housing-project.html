@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <title>AI Housing Exterior Visualizer - Case Study</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #050a15 50%, #0d1b2a 100%);
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+        }
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.6);
+        }
+        .step-card:hover {
+            transform: translateY(-4px);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-900 to-indigo-900 py-4 sm:py-6">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 glow-text">AI Housing Exterior Visualizer</h1>
+            <p class="text-sm sm:text-base text-gray-300 mb-6">Upload a house photo. Pick your finishes. Generate a realistic before/after preview — powered by Google Gemini.</p>
+            <a href="../../../index.html" class="inline-flex items-center px-6 py-3 bg-blue-400 hover:bg-blue-500 text-black rounded-full font-medium btn-glow transition-all duration-300">
+                <i data-feather="arrow-left" class="mr-2 w-4 h-4"></i>
+                Back to Portfolio
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+
+        <!-- Project Overview -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Project Overview</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <p class="text-lg text-gray-300 mb-6">
+                    An AI-powered exterior visualization web app that lets homeowners and contractors upload a house photo, choose new soffit, fascia, gutter, and downspout finishes, and generate a realistic before/after preview — all through a clean, step-by-step interface powered by <span class="text-blue-400">Google Gemini</span> and built with <span class="text-blue-400">Next.js</span>.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-blue-400">Key Features</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• Upload a house photo from your computer</li>
+                            <li>• Step-by-step selection flow with a progress stepper</li>
+                            <li>• Separate soffit styles (Pinhole & Hidden Vent)</li>
+                            <li>• Built-in texture libraries for exterior materials</li>
+                            <li>• Optional custom texture upload per category</li>
+                            <li>• AI image generation via server-side API route</li>
+                            <li>• Before/after comparison slider</li>
+                            <li>• Download generated result image</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-blue-400">Tech Stack</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li>• <span class="text-white font-medium">Next.js</span> — App Router, API Routes</li>
+                            <li>• <span class="text-white font-medium">React</span> — UI components</li>
+                            <li>• <span class="text-white font-medium">TypeScript</span> — type safety</li>
+                            <li>• <span class="text-white font-medium">Tailwind CSS</span> — styling</li>
+                            <li>• <span class="text-white font-medium">@google/genai</span> — Gemini image generation</li>
+                            <li>• <span class="text-white font-medium">Node.js</span> — server-side processing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">How It Works</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="step-card bg-gray-800 rounded-xl p-6 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-black font-bold text-lg">1</div>
+                    <h3 class="text-lg font-semibold mb-2">Upload</h3>
+                    <p class="text-gray-400 text-sm">Upload a clear house photo (JPEG or PNG) from your device.</p>
+                </div>
+                <div class="step-card bg-gray-800 rounded-xl p-6 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-black font-bold text-lg">2</div>
+                    <h3 class="text-lg font-semibold mb-2">Select</h3>
+                    <p class="text-gray-400 text-sm">Pick finishes for soffit, fascia, gutter, and downspout from texture libraries or upload your own.</p>
+                </div>
+                <div class="step-card bg-gray-800 rounded-xl p-6 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-black font-bold text-lg">3</div>
+                    <h3 class="text-lg font-semibold mb-2">Generate</h3>
+                    <p class="text-gray-400 text-sm">The app sends images and selections to the Gemini API, which returns a photorealistic edit.</p>
+                </div>
+                <div class="step-card bg-gray-800 rounded-xl p-6 text-center border border-blue-900/40">
+                    <div class="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4 text-black font-bold text-lg">4</div>
+                    <h3 class="text-lg font-semibold mb-2">Compare</h3>
+                    <p class="text-gray-400 text-sm">Drag the before/after slider to compare results and download the final image.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Screenshots -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Project Screenshots</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
+                    <img src="../../../WhatsApp Image 2026-04-25 at 4.55.54 PM.jpeg"
+                         alt="Housing Exterior Visualizer — main interface"
+                         class="w-full h-64 object-cover">
+                    <p class="text-center text-gray-400 text-sm py-3">Main App Interface — Upload & Selection Flow</p>
+                </div>
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
+                    <img src="../../../WhatsApp Image 2026-04-25 at 4.55.54 PM (1).jpeg"
+                         alt="Housing Exterior Visualizer — before and after result"
+                         class="w-full h-64 object-cover">
+                    <p class="text-center text-gray-400 text-sm py-3">Before / After Comparison Slider & Result</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exterior Categories -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Exterior Categories</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="home" class="w-6 h-6 text-black"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Soffit</h3>
+                    </div>
+                    <p class="text-gray-400">Two distinct styles — <span class="text-white">Pinhole</span> and <span class="text-white">Hidden Vent</span> — with a built-in texture library for each. The app preserves the roofline and geometry while updating only this surface.</p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="align-justify" class="w-6 h-6 text-black"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Fascia Board</h3>
+                    </div>
+                    <p class="text-gray-400">Select from fascia texture options or upload a custom material reference. The prompt logic ensures windows, doors, and landscaping remain unchanged.</p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="droplet" class="w-6 h-6 text-black"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Gutter</h3>
+                    </div>
+                    <p class="text-gray-400">Choose a gutter material texture from the built-in catalog or supply your own reference image for a custom look across the entire roofline.</p>
+                </div>
+                <div class="bg-gray-800 rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-blue-500 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+                            <i data-feather="arrow-down" class="w-6 h-6 text-black"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold">Downspout</h3>
+                    </div>
+                    <p class="text-gray-400">Visualize new downspout finishes that coordinate with the chosen gutter. Each category can be independently selected or skipped.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Implementation -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Technical Implementation</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">Generation Pipeline</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                Browser reads & resizes the uploaded house image
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                Built-in or custom textures loaded as reference images
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                Frontend sends all data to Next.js API route (/api/generate)
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                API builds a detailed prompt preserving house geometry
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="check" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                Gemini returns edited image; displayed in before/after slider
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">Project Structure</h3>
+                        <div class="bg-black/40 rounded-lg p-4 text-sm font-mono text-gray-300 space-y-1">
+                            <p class="text-blue-400">frontend/</p>
+                            <p class="pl-4">├── <span class="text-white">app/</span> — App Router pages</p>
+                            <p class="pl-8">└── <span class="text-white">api/generate/</span> — Gemini route</p>
+                            <p class="pl-4">├── <span class="text-white">components/</span> — UI steps</p>
+                            <p class="pl-4">├── <span class="text-white">lib/</span> — prompt builder, textures</p>
+                            <p class="pl-4">├── <span class="text-white">public/textures/</span> — built-in assets</p>
+                            <p class="pl-4">└── <span class="text-white">types/</span> — TypeScript types</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Sample -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Code Sample — Prompt Builder</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="bg-black/30 border border-white/10 rounded-lg overflow-hidden">
+                    <pre class="text-blue-300 text-sm overflow-x-auto p-6"><code>// lib/prompt-builder.ts
+export function buildExteriorPrompt(selections: ExteriorSelections): string {
+  const changes = [];
+
+  if (selections.soffit) {
+    changes.push(
+      `Replace the soffit with ${selections.soffit.style} style ` +
+      `using the reference texture provided.`
+    );
+  }
+  if (selections.fascia) {
+    changes.push(`Update the fascia board material to match reference.`);
+  }
+  if (selections.gutter) {
+    changes.push(`Change gutters to the material shown in the texture.`);
+  }
+  if (selections.downspout) {
+    changes.push(`Replace downspouts with the provided finish.`);
+  }
+
+  return `
+    You are an expert architectural visualizer.
+    Edit ONLY: ${changes.join(' ')}
+
+    PRESERVE WITHOUT CHANGE:
+    - Overall building shape and roofline geometry
+    - All windows and doors
+    - Surrounding landscaping and sky
+    - Any other surfaces not listed above
+
+    Return a photorealistic result.
+  `;
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Use Cases</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-3">Homeowners</h3>
+                    <p class="text-gray-300">Visualize exterior trim updates before committing to real-world purchases and installation costs.</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-3">Contractors</h3>
+                    <p class="text-gray-300">Present clients with realistic previews of material choices during the estimation and sales process.</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-900 to-indigo-900 rounded-xl p-6">
+                    <h3 class="text-xl font-semibold mb-3">Material Suppliers</h3>
+                    <p class="text-gray-300">Allow customers to try products virtually, improving purchase confidence and reducing returns.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results -->
+        <section class="mb-16">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-6 glow-text">Key Outcomes</h2>
+            <div class="bg-gray-800 rounded-xl p-4 sm:p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">What Was Achieved</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                <span>End-to-end AI image generation workflow integrated in Next.js</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                <span>Prompt engineering that strongly preserves original house geometry</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                <span>Flexible texture system with built-in catalog & custom upload</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="trending-up" class="w-5 h-5 text-blue-400 mr-3 flex-shrink-0"></i>
+                                <span>Beginner-friendly codebase with clean project structure</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-400">Planned Enhancements</h3>
+                        <ul class="space-y-3 text-gray-300">
+                            <li class="flex items-center">
+                                <i data-feather="clock" class="w-5 h-5 text-indigo-400 mr-3 flex-shrink-0"></i>
+                                <span>Expanded texture catalog with real material suppliers</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="clock" class="w-5 h-5 text-indigo-400 mr-3 flex-shrink-0"></i>
+                                <span>Saved project history and shareable preview links</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="clock" class="w-5 h-5 text-indigo-400 mr-3 flex-shrink-0"></i>
+                                <span>Mobile-optimized camera capture flow</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i data-feather="clock" class="w-5 h-5 text-indigo-400 mr-3 flex-shrink-0"></i>
+                                <span>Multi-region generation for large houses</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">&copy; 2025 Ahmad Nadeem Butt. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        feather.replace();
+    </script>
+</body>
+</html>
